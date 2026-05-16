@@ -57,18 +57,30 @@
 
     /* HERO */
     #hero { min-height: 94vh; display: flex; align-items: center; padding: 80px 0 100px; overflow: hidden; }
-    .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .hero-inner { max-width: 680px; }
     .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--persimmon); margin-bottom: 20px; font-family: var(--sans); }
-    .hero-text h1 { font-size: clamp(34px, 4vw, 52px); margin-bottom: 28px; font-weight: 700; }
+    .hero-text h1 { font-size: clamp(38px, 5vw, 64px); margin-bottom: 28px; font-weight: 700; }
     .hero-text h1 em { font-style: italic; font-weight: 600; color: var(--persimmon); }
-    .hero-text p { font-size: 17px; margin-bottom: 40px; max-width: 480px; color: var(--ash); }
+    .hero-text p { font-size: 18px; margin-bottom: 40px; max-width: 520px; color: var(--ash); }
     .hero-cta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
     .hero-cta-note { font-size: 13px; color: var(--ash); }
-    .hero-visual { display: flex; align-items: center; justify-content: center; position: relative; }
 
     /* Kakeibo Circle */
     .kakeibo-circle-wrap { display: flex; justify-content: center; align-items: center; width: 100%; }
-    #kakeibo-circle { width: 100%; max-width: 460px; }
+    #kakeibo-circle { width: 100%; max-width: 680px; }
+
+    /* Kakeibo section two-column layout */
+    #kakeibo-method { background: var(--warm-mid); }
+    .kakeibo-inner { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: center; }
+    #circle-center { transition: opacity 0.4s ease; }
+    #circle-center.fading { opacity: 0; }
+    #orbit-dot { transition: stroke 0.6s ease; }
+    .node-halo { opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .node-halo.pulsing { animation: node-pulse 0.9s ease-out forwards; }
+    @keyframes node-pulse {
+      0%   { transform: scale(1); opacity: 0.55; }
+      100% { transform: scale(3.2); opacity: 0; }
+    }
 
     /* PHONE FRAME */
     .phone { width: 255px; background: #111; border-radius: 44px; padding: 10px; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 50px 110px rgba(26,21,16,0.28), 0 20px 40px rgba(26,21,16,0.1); flex-shrink: 0; }
@@ -131,20 +143,7 @@
     .bullet-dot { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
 
     /* KAKEIBO METHOD SECTION */
-    #kakeibo-method { background: var(--warm-mid); }
-    .method-head { margin-bottom: 56px; }
-    .method-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
-    .method-steps::before {
-      content: ''; position: absolute; top: 40px; left: calc(12.5%); right: calc(12.5%);
-      height: 1px; background: linear-gradient(to right, var(--persimmon), var(--gold), var(--teal), var(--purple));
-      opacity: 0.3; z-index: 0;
-    }
-    .method-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 24px 40px; position: relative; z-index: 1; }
-    .method-step-num { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 12px; font-family: var(--sans); }
-    .method-step-dot { width: 18px; height: 18px; border-radius: 50%; margin-bottom: 20px; box-shadow: 0 0 0 5px var(--warm-mid); }
-    .method-step-name { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
-    .method-step-q { font-size: 12px; color: var(--ash); font-style: italic; margin-bottom: 12px; line-height: 1.5; }
-    .method-step-desc { font-size: 13px; color: var(--ash); line-height: 1.6; }
+    .method-head { margin-bottom: 48px; }
 
     /* PILLARS */
     #pillars { background: var(--offwhite); }
@@ -304,10 +303,10 @@
       .container { padding: 0 24px; }
       section { padding: calc(var(--section-pad) * 0.75) 0; }
       .washi-divider { padding: 0 24px; }
-      .hero-inner, .feature-grid, #whatif .whatif-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { order: -1; }
+      .feature-grid, #whatif .whatif-inner { grid-template-columns: 1fr; gap: 48px; }
       .hero-text { text-align: center; }
       .hero-text p, .hero-cta { max-width: none; justify-content: center; }
+      .hero-inner { max-width: none; }
       .problem-cards { grid-template-columns: 1fr; }
       .testimonials { grid-template-columns: repeat(2,1fr); gap: 16px; }
       .pillars-cols { grid-template-columns: repeat(2, 1fr); }
@@ -320,8 +319,8 @@
       .sb-stat:nth-child(odd) { border-right: 1px solid var(--warm-deep); padding-right: 24px; }
       .sb-stat:nth-child(even) { padding-left: 24px; }
       .sb-stat:nth-child(3), .sb-stat:nth-child(4) { border-top: 1px solid var(--warm-deep); padding-top: 24px; margin-top: 24px; }
-      .method-steps { grid-template-columns: repeat(2,1fr); gap: 24px; }
-      .method-steps::before { display: none; }
+      .kakeibo-inner { grid-template-columns: 1fr; gap: 48px; }
+      .kakeibo-right { order: -1; }
       .feature-grid.flip > :first-child { order: 1; }
       .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
       .phone { width: 220px; }
@@ -520,64 +519,6 @@
         </div>
       </div>
 
-      <!-- Kakeibo cycle circle -->
-      <div class="hero-visual reveal" style="transition-delay:0.15s">
-        <div class="kakeibo-circle-wrap">
-          <svg id="kakeibo-circle" viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg" aria-label="The Kakeibo cycle: Awareness, Intention, Tracking, Reflection">
-            <!-- Faint background kanji -->
-            <text x="300" y="312" text-anchor="middle" font-size="108" font-family="serif" style="fill: var(--ink)" opacity="0.03">予備</text>
-
-            <!-- Soft inner fill -->
-            <circle cx="300" cy="280" r="138" fill="rgba(243,238,230,0.5)"/>
-
-            <!-- Outer dashed orbit -->
-            <circle cx="300" cy="280" r="140" fill="none" stroke="rgba(107,101,96,0.18)" stroke-width="1.5" stroke-dasharray="7 5"/>
-
-            <!-- Node halos -->
-            <circle cx="300" cy="140" r="24" style="fill: var(--persimmon)" opacity="0.1"/>
-            <circle cx="440" cy="280" r="24" style="fill: var(--gold)" opacity="0.1"/>
-            <circle cx="300" cy="420" r="24" style="fill: var(--teal)" opacity="0.1"/>
-            <circle cx="160" cy="280" r="24" style="fill: var(--purple)" opacity="0.1"/>
-
-            <!-- Node dots -->
-            <circle cx="300" cy="140" r="9" style="fill: var(--persimmon)"/>
-            <circle cx="440" cy="280" r="9" style="fill: var(--gold)"/>
-            <circle cx="300" cy="420" r="9" style="fill: var(--teal)"/>
-            <circle cx="160" cy="280" r="9" style="fill: var(--purple)"/>
-
-            <!-- Orbit path for animateMotion -->
-            <defs>
-              <path id="orbitPath" d="M 300 140 A 140 140 0 0 1 440 280 A 140 140 0 0 1 300 420 A 140 140 0 0 1 160 280 A 140 140 0 0 1 300 140" fill="none"/>
-            </defs>
-
-            <!-- Animated traveling dot -->
-            <circle r="8" style="fill: var(--offwhite); stroke: var(--gold)" stroke-width="2.5" opacity="0.95">
-              <animateMotion dur="10s" repeatCount="indefinite">
-                <mpath href="#orbitPath"/>
-              </animateMotion>
-            </circle>
-
-            <!-- Step numbers -->
-            <text x="300" y="82" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--persimmon)" letter-spacing="3" font-weight="700">01</text>
-            <text x="472" y="262" text-anchor="start" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--gold)" letter-spacing="3" font-weight="700">02</text>
-            <text x="300" y="454" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--teal)" letter-spacing="3" font-weight="700">03</text>
-            <text x="128" y="262" text-anchor="end" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--purple)" letter-spacing="3" font-weight="700">04</text>
-
-            <!-- Step names -->
-            <text x="300" y="100" text-anchor="middle" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Awareness</text>
-            <text x="472" y="280" text-anchor="start" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Intention</text>
-            <text x="300" y="472" text-anchor="middle" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Tracking</text>
-            <text x="128" y="280" text-anchor="end" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Reflection</text>
-
-            <!-- Questions -->
-            <text x="300" y="119" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">How much do I have?</text>
-            <text x="472" y="299" text-anchor="start" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">How much to save?</text>
-            <text x="300" y="491" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">Where is it going?</text>
-            <text x="128" y="299" text-anchor="end" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">How can I do better?</text>
-          </svg>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -614,46 +555,78 @@
 <!-- ─── 3. THE KAKEIBO METHOD ────────────────────────────────────────────────── -->
 <section id="kakeibo-method">
   <div class="container">
-    <div class="method-head reveal">
-      <p class="sec-eyebrow">The Kakeibo method</p>
-      <h2 class="sec-display">120 years old.<br><em>Built for today.</em></h2>
-      <hr class="sec-rule">
-      <p class="sec-intro">The Japanese household ledger created by Motoko Hani in 1904, reduces personal finance to four honest questions. Yobi answers all of them.</p>
-    </div>
-    <div class="method-steps reveal" style="transition-delay:0.1s">
-      <div class="method-step">
-        <div class="method-step-num" style="color:var(--persimmon)">01</div>
-        <div class="method-step-dot" style="background:var(--persimmon)"></div>
-        <div class="method-step-name">Awareness</div>
-        <div class="method-step-q">"How much do I have?"</div>
-        <div class="method-step-desc">See your real balance across every wallet and currency, projected forward in time. No guessing.</div>
+    <div class="kakeibo-inner">
+      <!-- Left: text content -->
+      <div class="kakeibo-left">
+        <div class="method-head reveal">
+          <p class="sec-eyebrow">The Kakeibo method</p>
+          <h2 class="sec-display">120 years old.<br><em>Built for today.</em></h2>
+          <hr class="sec-rule">
+          <p class="sec-intro">The Japanese household ledger created by Motoko Hani in 1904, reduces personal finance to four honest questions. Yobi answers all of them.</p>
+        </div>
       </div>
-      <div class="method-step">
-        <div class="method-step-num" style="color:var(--gold)">02</div>
-        <div class="method-step-dot" style="background:var(--gold)"></div>
-        <div class="method-step-name">Intention</div>
-        <div class="method-step-q">"How much do I want to save?"</div>
-        <div class="method-step-desc">Set your savings target before spending. Toggle planned expenses to see your runway shift in real time.</div>
-      </div>
-      <div class="method-step">
-        <div class="method-step-num" style="color:var(--teal)">03</div>
-        <div class="method-step-dot" style="background:var(--teal)"></div>
-        <div class="method-step-name">Tracking</div>
-        <div class="method-step-q">"Where is my money going?"</div>
-        <div class="method-step-desc">Every expense belongs to one of four pillars: not just a category, but an intention. Needs. Wants. Growth. Surprises.</div>
-      </div>
-      <div class="method-step">
-        <div class="method-step-num" style="color:var(--purple)">04</div>
-        <div class="method-step-dot" style="background:var(--purple)"></div>
-        <div class="method-step-name">Reflection</div>
-        <div class="method-step-q">"How can I do better next month?"</div>
-        <div class="method-step-desc">Ko walks you through a quiet five-minute ritual at the start of each month. No scores. Just honest questions.</div>
-      </div>
-    </div>
 
-    <!-- Transition line -->
-    <div class="reveal" style="text-align:center;margin-top:56px;font-size:14px;color:var(--ash);font-style:italic;transition-delay:0.2s">
-      Awareness → Intention → Tracking → Reflection. Then start again.
+      <!-- Right: animated circle -->
+      <div class="kakeibo-right reveal" style="transition-delay:0.15s">
+        <div class="kakeibo-circle-wrap">
+          <svg id="kakeibo-circle" viewBox="55 60 490 440" xmlns="http://www.w3.org/2000/svg" aria-label="The Kakeibo cycle: Awareness, Intention, Tracking, Reflection">
+            <!-- Soft inner fill -->
+            <circle cx="300" cy="280" r="138" fill="rgba(243,238,230,0.5)"/>
+
+            <!-- Outer dashed orbit -->
+            <circle cx="300" cy="280" r="140" fill="none" stroke="rgba(107,101,96,0.18)" stroke-width="1.5" stroke-dasharray="7 5"/>
+
+            <!-- Node halos (hidden; pulsed once by JS on arrival) -->
+            <circle id="halo-0" class="node-halo" cx="300" cy="140" r="9" fill="var(--persimmon)"/>
+            <circle id="halo-1" class="node-halo" cx="440" cy="280" r="9" fill="var(--gold)"/>
+            <circle id="halo-2" class="node-halo" cx="300" cy="420" r="9" fill="var(--teal)"/>
+            <circle id="halo-3" class="node-halo" cx="160" cy="280" r="9" fill="var(--purple)"/>
+
+            <!-- Node dots -->
+            <circle cx="300" cy="140" r="9" style="fill: var(--persimmon)"/>
+            <circle cx="440" cy="280" r="9" style="fill: var(--gold)"/>
+            <circle cx="300" cy="420" r="9" style="fill: var(--teal)"/>
+            <circle cx="160" cy="280" r="9" style="fill: var(--purple)"/>
+
+            <!-- Orbit path for animateMotion -->
+            <defs>
+              <path id="orbitPath" d="M 300 140 A 140 140 0 0 1 440 280 A 140 140 0 0 1 300 420 A 140 140 0 0 1 160 280 A 140 140 0 0 1 300 140" fill="none"/>
+            </defs>
+
+            <!-- Animated traveling dot -->
+            <circle id="orbit-dot" r="8" style="fill: var(--offwhite); stroke: #D4704A" stroke-width="2.5" opacity="0.95">
+              <animateMotion dur="20s" repeatCount="indefinite">
+                <mpath href="#orbitPath"/>
+              </animateMotion>
+            </circle>
+
+            <!-- Center animated content -->
+            <g id="circle-center">
+              <text id="cc-num" x="300" y="238" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" letter-spacing="3" font-weight="700" fill="#D4704A">01</text>
+              <text id="cc-name" x="300" y="268" text-anchor="middle" font-family="'DM Serif Display', Georgia, serif" font-size="26" fill="#D4704A">Awareness</text>
+              <text id="cc-q" x="300" y="292" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" font-style="italic" fill="#6B6560">"How much do I have?"</text>
+              <foreignObject x="185" y="302" width="230" height="80">
+                <div id="cc-desc" xmlns="http://www.w3.org/1999/xhtml" style="font-family:'DM Sans',sans-serif;font-size:12px;color:#6B6560;text-align:center;line-height:1.6;">
+                  See your real balance across every wallet and currency, projected forward in time.
+                </div>
+              </foreignObject>
+            </g>
+
+            <!-- Step numbers -->
+            <text x="300" y="82" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--persimmon)" letter-spacing="3" font-weight="700">01</text>
+            <text x="472" y="262" text-anchor="start" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--gold)" letter-spacing="3" font-weight="700">02</text>
+            <text x="300" y="454" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--teal)" letter-spacing="3" font-weight="700">03</text>
+            <text x="128" y="262" text-anchor="end" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--purple)" letter-spacing="3" font-weight="700">04</text>
+
+            <!-- Step names -->
+            <text x="300" y="100" text-anchor="middle" font-family="'Noto Serif JP', Georgia, serif" font-size="13" style="fill: var(--ink)">Awareness</text>
+            <text x="472" y="280" text-anchor="start" font-family="'Noto Serif JP', Georgia, serif" font-size="13" style="fill: var(--ink)">Intention</text>
+            <text x="300" y="472" text-anchor="middle" font-family="'Noto Serif JP', Georgia, serif" font-size="13" style="fill: var(--ink)">Tracking</text>
+            <text x="128" y="280" text-anchor="end" font-family="'Noto Serif JP', Georgia, serif" font-size="13" style="fill: var(--ink)">Reflection</text>
+
+          </svg>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1148,6 +1121,52 @@
       : `Ko sees ${newDays} days. More room to breathe.`;
     document.getElementById('koSay').textContent = says;
   }
+
+  // Kakeibo circle center — cycle content in sync with 10s orbit (25% = 2.5s per step)
+  const kkSteps = [
+    { num:'01', name:'Awareness',  color:'#D4704A', q:'"How much do I have?"',             desc:'See your real balance across every wallet and currency, projected forward in time.' },
+    { num:'02', name:'Intention',  color:'#E8A43C', q:'"How much do I want to save?"',     desc:'Set your savings target before spending. Toggle planned expenses to see your runway shift.' },
+    { num:'03', name:'Tracking',   color:'#3D9B9B', q:'"Where is my money going?"',        desc:'Every expense belongs to one of four pillars — an intention, not just a category.' },
+    { num:'04', name:'Reflection', color:'#9B6FAF', q:'"How can I do better next month?"', desc:'Ko walks you through a quiet five-minute ritual at the start of each month.' },
+  ];
+  let kkIdx = 0;
+  function applyKKStep(s) {
+    const num  = document.getElementById('cc-num');
+    const name = document.getElementById('cc-name');
+    num.textContent  = s.num;
+    num.setAttribute('fill', s.color);
+    name.textContent = s.name;
+    name.setAttribute('fill', s.color);
+    document.getElementById('cc-q').textContent    = s.q;
+    document.getElementById('cc-desc').textContent = s.desc;
+    document.getElementById('orbit-dot').style.stroke = s.color;
+  }
+  function triggerNodePulse(idx) {
+    const halo = document.getElementById('halo-' + idx);
+    halo.classList.remove('pulsing');
+    void halo.getBoundingClientRect();
+    halo.classList.add('pulsing');
+  }
+
+  // fromIdx is captured at schedule time so stale kkIdx never bleeds into future cycles
+  function scheduleKKCycle(fromIdx) {
+    const nextIdx = (fromIdx + 1) % 4;
+    setTimeout(() => {
+      document.getElementById('orbit-dot').style.stroke = kkSteps[nextIdx].color;
+    }, 4400);
+    setTimeout(() => {
+      triggerNodePulse(nextIdx);
+      const g = document.getElementById('circle-center');
+      g.classList.add('fading');
+      setTimeout(() => {
+        kkIdx = nextIdx;
+        applyKKStep(kkSteps[kkIdx]);
+        g.classList.remove('fading');
+      }, 400);
+      scheduleKKCycle(nextIdx);
+    }, 5000);
+  }
+  scheduleKKCycle(0);
 </script>
 </body>
 </html>
