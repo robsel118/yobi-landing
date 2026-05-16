@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yobi: Know your runway. Spend with intention.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --persimmon: #D4704A; --teal: #3D9B9B; --purple: #9B6FAF; --gold: #E8A43C;
+      --offwhite: #FAF7F2; --ink: #1A1510; --ash: #6B6560;
+      --warm-mid: #F3EEE6; --warm-deep: #EDE5D8; --warm-muted: #D0C9BE;
+      --serif: 'Noto Serif JP', 'Georgia', serif;
+      --sans: 'Noto Sans', '-apple-system', 'BlinkMacSystemFont', sans-serif;
+      --section-pad: 80px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--offwhite); color: var(--ash); line-height: 1.65; overflow-x: hidden; }
+
+    /* Washi paper texture */
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9000;
+      opacity: 0.045; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 250px 250px;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    section { padding: var(--section-pad) 0; position: relative; }
+    h1, h2, h3 { font-family: var(--serif); color: var(--ink); line-height: 1.2; font-weight: 600; }
+    p { font-size: 16px; line-height: 1.7; max-width: 72ch; }
+    a { text-decoration: none; }
+
+    /* Washi divider */
+    .washi-divider { padding: 0 48px; max-width: 1200px; margin: 0 auto; }
+    .washi-divider::before { content: ''; display: block; height: 1px; background: linear-gradient(to right, transparent, rgba(107,101,96,0.18) 15%, rgba(107,101,96,0.18) 85%, transparent); }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 500; padding: 18px 0; transition: background 0.3s, box-shadow 0.3s; }
+    nav.scrolled { background: rgba(250,247,242,0.88); backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgba(107,101,96,0.1); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--sans); font-size: 22px; color: var(--ink); display: flex; align-items: center; gap: 9px; font-weight: 600; }
+    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--persimmon); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 100px; font-family: var(--sans); font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.2s, transform 0.18s; }
+    .btn:hover { opacity: 0.84; transform: translateY(-1px); }
+    .btn:active { opacity: 0.72; transform: translateY(0); }
+    .btn-primary { background: var(--persimmon); color: #fff; }
+    .btn-primary-lg { font-size: 16px; padding: 14px 28px; }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid rgba(26,21,16,0.18); }
+
+    /* HERO */
+    #hero { min-height: 94vh; display: flex; align-items: center; padding: 80px 0 100px; overflow: hidden; }
+    .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--persimmon); margin-bottom: 20px; font-family: var(--sans); }
+    .hero-text h1 { font-size: clamp(34px, 4vw, 52px); margin-bottom: 28px; font-weight: 700; }
+    .hero-text h1 em { font-style: italic; font-weight: 600; color: var(--persimmon); }
+    .hero-text p { font-size: 17px; margin-bottom: 40px; max-width: 480px; color: var(--ash); }
+    .hero-cta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .hero-cta-note { font-size: 13px; color: var(--ash); }
+    .hero-visual { display: flex; align-items: center; justify-content: center; position: relative; }
+
+    /* Kakeibo Circle */
+    .kakeibo-circle-wrap { display: flex; justify-content: center; align-items: center; width: 100%; }
+    #kakeibo-circle { width: 100%; max-width: 460px; }
+
+    /* PHONE FRAME */
+    .phone { width: 255px; background: #111; border-radius: 44px; padding: 10px; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 50px 110px rgba(26,21,16,0.28), 0 20px 40px rgba(26,21,16,0.1); flex-shrink: 0; }
+    .phone.sm { width: 210px; }
+    .phone-island { position: absolute; top: 17px; left: 50%; transform: translateX(-50%); width: 86px; height: 25px; background: #111; border-radius: 20px; z-index: 2; }
+    .phone-screen { background: var(--offwhite); border-radius: 35px; overflow: hidden; position: relative; min-height: 510px; }
+    .phone.sm .phone-screen { min-height: 420px; }
+    .screen-pad { padding: 58px 14px 16px; }
+    .screen-status { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; margin-bottom: 14px; }
+    .screen-time { font-size: 11px; font-weight: 600; color: var(--ink); }
+    .screen-icons { font-size: 10px; color: var(--ink); opacity: 0.7; letter-spacing: 0.04em; }
+    .screen-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+    .screen-title { font-family: var(--serif); font-size: 18px; color: var(--ink); }
+    .screen-kanji { font-size: 12px; color: var(--ash); opacity: 0.45; }
+    .wallet-row { display: flex; gap: 7px; margin-bottom: 20px; overflow: hidden; }
+    .wallet-chip { flex-shrink: 0; padding: 7px 12px; background: white; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+    .wallet-chip .cc { display: block; font-size: 9px; font-weight: 600; color: var(--ash); letter-spacing: 0.06em; }
+    .wallet-chip .ca { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .runway-block { text-align: center; padding: 12px 0 10px; }
+    .runway-num { display: block; font-family: var(--serif); font-size: 58px; line-height: 1; color: var(--gold); }
+    .chart-svg { display: block; width: 100%; margin: 10px 0 8px; }
+    .tx-section { border-top: 1px solid rgba(107,101,96,0.1); padding-top: 10px; }
+    .tx-head { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ash); opacity: 0.55; margin-bottom: 8px; }
+    .tx { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(107,101,96,0.06); }
+    .tx-info { display: flex; flex-direction: column; }
+    .tx-name { font-size: 12px; font-weight: 500; color: var(--ink); }
+    .tx-cat { font-size: 9px; color: var(--ash); opacity: 0.55; }
+    .tx-amt { font-size: 12px; font-weight: 600; }
+    .tx-amt.neg { color: var(--persimmon); }
+    .tx-amt.pos { color: var(--teal); }
+    .tx-date { font-size: 9px; color: var(--ash); opacity: 0.5; }
+
+    /* KO FOX */
+    .ko-tail-g { transform-origin: 55px 85px; }
+
+    /* PROBLEM */
+    #problem { background: linear-gradient(to bottom, var(--offwhite), var(--warm-mid)); }
+    .problem-head { margin-bottom: 48px; }
+    .problem-answer { font-family: var(--serif); font-size: clamp(30px, 3.4vw, 52px); font-style: italic; color: var(--persimmon); line-height: 1.1; margin: 0 0 48px; font-weight: 600; }
+    .problem-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .pc { padding: 40px 32px; border-radius: 18px; }
+    .pc h3 { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; opacity: 0.8; color: inherit; }
+    .pc p { font-size: 17px; line-height: 1.6; color: inherit; }
+    .pc.before { background: var(--warm-deep); color: var(--ink); }
+    .pc.after { background: var(--ink); color: var(--offwhite); }
+    .pc.after p { color: rgba(250,247,242,0.82); }
+    .pc.diff { border: 1.5px solid rgba(107,101,96,0.2); display: flex; flex-direction: column; justify-content: center; text-align: center; }
+    .pc.diff p { font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--ink); line-height: 1.4; }
+
+    /* FEATURE SECTIONS */
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .feat-label { display: flex; align-items: center; gap: 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--persimmon); margin-bottom: 18px; font-family: var(--sans); }
+    .feat-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); flex-shrink: 0; }
+    .feat-label.teal { color: var(--teal); }
+    .feat-label.purple { color: var(--purple); }
+    .feat-h2 { font-family: var(--serif); font-size: clamp(30px, 3.4vw, 52px); margin-bottom: 20px; font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; }
+    .feat-body { margin-bottom: 32px; }
+    .feat-bullets { display: flex; flex-direction: column; gap: 12px; }
+    .feat-bullet { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink); }
+    .bullet-dot { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+
+    /* KAKEIBO METHOD SECTION */
+    #kakeibo-method { background: var(--warm-mid); }
+    .method-head { margin-bottom: 56px; }
+    .method-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+    .method-steps::before {
+      content: ''; position: absolute; top: 40px; left: calc(12.5%); right: calc(12.5%);
+      height: 1px; background: linear-gradient(to right, var(--persimmon), var(--gold), var(--teal), var(--purple));
+      opacity: 0.3; z-index: 0;
+    }
+    .method-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 24px 40px; position: relative; z-index: 1; }
+    .method-step-num { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 12px; font-family: var(--sans); }
+    .method-step-dot { width: 18px; height: 18px; border-radius: 50%; margin-bottom: 20px; box-shadow: 0 0 0 5px var(--warm-mid); }
+    .method-step-name { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .method-step-q { font-size: 12px; color: var(--ash); font-style: italic; margin-bottom: 12px; line-height: 1.5; }
+    .method-step-desc { font-size: 13px; color: var(--ash); line-height: 1.6; }
+
+    /* PILLARS */
+    #pillars { background: var(--offwhite); }
+    .sec-eyebrow { display: flex; align-items: center; gap: 14px; font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ash); margin-bottom: 18px; }
+    .sec-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); flex-shrink: 0; }
+    .sec-display { font-family: var(--serif); font-weight: 700; font-size: clamp(30px, 3.4vw, 52px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 28px; }
+    .sec-display em { color: var(--gold); font-style: italic; }
+    .sec-rule { border: none; border-top: 1px solid var(--warm-muted); margin: 0 0 32px; }
+    .sec-intro { max-width: 54ch; font-size: 16px; line-height: 1.75; color: var(--ash); margin: 0 0 60px; }
+    .pillars-cols { display: grid; grid-template-columns: repeat(4, 1fr); margin-bottom: 40px; }
+    .pillar-bridge { text-align: center; font-size: 14px; color: var(--ash); font-style: italic; margin: 0 auto 20px; max-width: 420px; }
+    .pcol { padding: 0 32px 40px 0; }
+    .pcol + .pcol { border-left: 1px solid var(--warm-deep); padding-left: 32px; padding-right: 32px; }
+    .pcol:last-child { padding-right: 0; }
+    .pcol-kanji { font-family: var(--serif); font-size: 48px; line-height: 1; margin-bottom: 20px; }
+    .pcol.survival .pcol-kanji { color: var(--persimmon); }
+    .pcol.optional .pcol-kanji { color: var(--teal); }
+    .pcol.culture  .pcol-kanji { color: var(--purple); }
+    .pcol.extra    .pcol-kanji { color: var(--gold); }
+    .pcol-name { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); margin: 0 0 10px; }
+    .pcol-desc { font-size: 14px; line-height: 1.65; color: var(--ash); margin: 0 0 24px; }
+    .pcol-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pcol-tag { font-size: 11px; font-family: var(--sans); letter-spacing: 0.02em; color: var(--ash); border: 1px solid var(--warm-muted); border-radius: 100px; padding: 4px 10px; }
+    .pcol.survival .pcol-tag { border-color: color-mix(in srgb, var(--persimmon) 25%, var(--warm-muted)); }
+    .pcol.optional .pcol-tag { border-color: color-mix(in srgb, var(--teal) 25%, var(--warm-muted)); }
+    .pcol.culture  .pcol-tag { border-color: color-mix(in srgb, var(--purple) 25%, var(--warm-muted)); }
+    .pcol.extra    .pcol-tag { border-color: color-mix(in srgb, var(--gold) 25%, var(--warm-muted)); }
+    .pillar-chart { margin: 0 auto; padding: 0; background: none; border-radius: 0; box-shadow: none; }
+    .chart-label-row { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--ash) 60%, transparent); margin-bottom: 28px; }
+    .sb-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .sb-stat { padding: 0 32px 0 0; }
+    .sb-stat + .sb-stat { border-left: 1px solid var(--warm-deep); padding-left: 32px; padding-right: 32px; }
+    .sb-stat:last-child { padding-right: 0; }
+    .sb-num { font-family: var(--serif); font-size: clamp(36px, 4vw, 54px); font-weight: 700; line-height: 1; margin-bottom: 14px; }
+    .sb-unit { font-size: 0.5em; font-weight: 400; vertical-align: super; }
+    .sb-stat.survival .sb-num { color: var(--persimmon); }
+    .sb-stat.optional .sb-num { color: var(--teal); }
+    .sb-stat.culture  .sb-num { color: var(--purple); }
+    .sb-stat.extra    .sb-num { color: var(--gold); }
+    .sb-bar-wrap { height: 4px; background: var(--warm-deep); border-radius: 2px; overflow: hidden; margin-bottom: 12px; }
+    .sb-name { font-size: 12px; color: var(--ash); letter-spacing: 0.04em; }
+    .bar-fill { height: 100%; border-radius: 2px; width: 100%; transform: scaleX(0); transform-origin: left center; transition: transform 1.1s cubic-bezier(0.16,1,0.3,1); }
+    @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .reveal { transition: none; opacity: 1; transform: none; } }
+
+    /* WHAT-IF */
+    #whatif .whatif-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .whatif-phone-wrap { display: flex; flex-direction: column; align-items: center; }
+    .wi-expense { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(107,101,96,0.08); }
+    .wi-exp-info .wi-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .wi-exp-info .wi-sub { font-size: 10px; color: var(--ash); opacity: 0.6; }
+    .wi-amt { font-size: 13px; font-weight: 600; color: var(--persimmon); margin-right: 12px; }
+    .ios-tog { position: relative; width: 44px; height: 44px; flex-shrink: 0; cursor: pointer; }
+    .ios-tog input { opacity: 0; width: 0; height: 0; }
+    .ios-tog-track { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 26px; background: var(--warm-muted); border-radius: 100px; cursor: pointer; transition: background 0.25s; }
+    .ios-tog input:checked ~ .ios-tog-track { background: var(--teal); }
+    .ios-tog-thumb { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background: white; border-radius: 50%; box-shadow: 0 1px 5px rgba(0,0,0,0.22); transition: left 0.25s; pointer-events: none; }
+    .ios-tog input:checked ~ .ios-tog-track .ios-tog-thumb { left: 20px; }
+    .wi-runway-display { text-align: center; padding: 16px 0 12px; }
+    .wi-runway-num { font-family: var(--serif); font-size: 52px; color: var(--gold); line-height: 1; transition: color 0.4s; display: block; }
+    .wi-runway-num.red { color: var(--persimmon); }
+    .wi-sub-label { font-size: 11px; color: var(--ash); margin-top: 3px; }
+    .ko-reaction { text-align: center; margin-top: 24px; }
+    .ko-say { background: white; border-radius: 12px 12px 12px 4px; padding: 8px 12px; font-size: 12px; color: var(--ash); font-style: italic; line-height: 1.4; box-shadow: 0 2px 12px rgba(0,0,0,0.07); display: inline-block; max-width: 180px; margin-top: 8px; transition: opacity 0.3s; }
+
+    /* REFLECTION */
+    #reflection { background: var(--warm-mid); }
+    .refl-screen-head { background: var(--persimmon); padding: 12px 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .refl-screen-head .rtitle { font-family: var(--serif); font-size: 15px; color: white; }
+    .refl-body { padding: 0 14px 16px; }
+    .refl-prompt { background: white; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+    .refl-prompt-label { font-size: 10px; font-weight: 600; color: var(--ash); opacity: 0.6; margin-bottom: 4px; }
+    .refl-prompt-text { font-size: 12px; color: var(--ash); line-height: 1.45; }
+    .ko-letter { background: color-mix(in oklch, var(--persimmon) 9%, transparent); border: 1px solid color-mix(in oklch, var(--persimmon) 22%, transparent); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+    .ko-letter-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--persimmon); margin-bottom: 4px; }
+    .ko-letter-text { font-size: 11px; font-style: italic; color: var(--ash); line-height: 1.5; }
+
+    /* CURRENCY */
+    #currency { background: var(--warm-mid); }
+
+    .currency-cards { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 52px; }
+    .cur-card { background: var(--offwhite); border-radius: 20px; padding: 28px 32px; box-shadow: 0 4px 28px color-mix(in oklch, var(--ink) 8%, transparent); min-width: 175px; position: relative; text-align: left; overflow: hidden; }
+    .cur-card::after { font-family: var(--serif); font-size: 7rem; line-height: 1; position: absolute; bottom: -18px; right: 6px; opacity: 0.07; color: var(--ink); pointer-events: none; user-select: none; }
+    .cur-card.usd { background: color-mix(in oklch, var(--persimmon) 8%, var(--offwhite)); }
+    .cur-card.usd::after { content: '$'; }
+    .cur-card.usd .fx-badge { background: color-mix(in oklch, var(--persimmon) 15%, var(--offwhite)); }
+    .cur-card.eur { background: color-mix(in oklch, var(--gold) 8%, var(--offwhite)); }
+    .cur-card.eur::after { content: '€'; }
+    .cur-card.eur .fx-badge { background: color-mix(in oklch, var(--gold) 15%, var(--offwhite)); }
+    .cur-card.thb { background: color-mix(in oklch, var(--teal) 8%, var(--offwhite)); }
+    .cur-card.thb::after { content: '฿'; }
+    .cur-card.thb .fx-badge { background: color-mix(in oklch, var(--teal) 15%, var(--offwhite)); }
+    .cur-flag { font-size: 2.25rem; margin-bottom: 0.875rem; line-height: 1; }
+    .cur-code { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ash); margin-bottom: 0.375rem; text-decoration: none; }
+    .cur-amount { display: block; font-family: var(--serif); font-size: 1.625rem; color: var(--ink); line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums lining-nums; }
+    .fx-badge { display: inline-block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.05em; color: var(--ink); background: color-mix(in oklch, var(--teal) 18%, var(--offwhite)); padding: 3px 8px; border-radius: 100px; margin-top: 0.5rem; }
+    .cur-total { margin-top: 56px; }
+    .cur-ledger { max-width: 420px; margin: 0 auto; text-align: left; }
+    .cur-ledger-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid color-mix(in oklch, var(--ink) 7%, transparent); }
+    .cur-ledger-code { display: flex; align-items: center; gap: 9px; font-size: 0.8125rem; font-weight: 500; color: var(--ash); letter-spacing: 0.04em; }
+    .cur-ledger-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .cur-ledger-amt { font-size: 0.9375rem; font-family: var(--sans); font-variant-numeric: tabular-nums lining-nums; color: var(--ink); }
+    .cur-ledger-total { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0 0; border-top: 3px double color-mix(in oklch, var(--ink) 18%, transparent); margin-top: 1px; }
+    .cur-ledger-total-label { font-size: 0.8125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ash); }
+    .cur-total-amt { font-family: var(--serif); font-size: clamp(2.25rem, 8vw, 3.25rem); color: var(--ink); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; display: flex; align-items: baseline; gap: 0.15em; }
+    .cur-total-amt span:last-child { font-size: 0.75em; color: var(--ash); }
+    .cur-rates-note { text-align: right; font-size: 0.875rem; color: var(--ash); margin-top: 0.625rem; }
+
+    /* PHILOSOPHY */
+    #philosophy { background: linear-gradient(to bottom, var(--warm-mid), var(--offwhite)); text-align: center; }
+    .phi-bar { width: 2px; height: 72px; background: var(--persimmon); margin: 0 auto 32px; border-radius: 100px; opacity: 0.7; }
+    .phi-quote { font-family: var(--serif); font-size: clamp(22px, 2.8vw, 36px); color: var(--ink); font-style: italic; font-weight: 500; line-height: 1.6; max-width: 720px; margin: 0 auto 72px; }
+    .testimonials { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; max-width: 960px; margin: 0 auto; }
+    .testi { background: white; border-radius: 16px; padding: 28px; text-align: left; box-shadow: 0 2px 16px rgba(0,0,0,0.04); }
+    .testi p { font-size: 15px; color: var(--ink); font-style: italic; margin-bottom: 18px; line-height: 1.6; }
+    .testi-author { font-size: 12px; color: var(--ash); font-weight: 500; }
+
+    /* FOOTER CTA */
+    #footer-cta { padding: 140px 0 120px; text-align: center; background: linear-gradient(160deg, color-mix(in oklch, var(--persimmon) 75%, var(--ink)) 0%, var(--persimmon) 55%, var(--offwhite) 100%); }
+    #footer-cta h2 { font-size: clamp(30px, 3.4vw, 52px); letter-spacing: -0.02em; line-height: 1.08; color: white; margin-bottom: 16px; font-weight: 700; font-family: var(--serif); }
+    #footer-cta .sec-eyebrow { color: rgba(255,255,255,0.55); }
+    #footer-cta .sec-eyebrow::before { background: rgba(255,255,255,0.4); }
+    #footer-cta p { font-size: 18px; color: rgba(255,255,255,0.82); margin-bottom: 44px; }
+    .appstore-btn { display: inline-flex; align-items: center; gap: 14px; background: var(--ink); color: white; padding: 14px 28px; border-radius: 100px; font-family: var(--sans); text-decoration: none; transition: opacity 0.2s, transform 0.18s; }
+    .appstore-btn:hover { opacity: 0.84; transform: translateY(-2px); }
+    .appstore-btn:active { opacity: 0.72; transform: translateY(0); }
+    .appstore-btn .as-text small { display: block; font-size: 11px; font-weight: 400; opacity: 0.7; }
+    .appstore-btn .as-text strong { display: block; font-size: 16px; font-weight: 600; }
+    .footer-ko-wrap { margin-bottom: 48px; }
+
+    /* FOOTER */
+    footer { padding: 36px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-brand { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+    .footer-legal { font-size: 12px; color: var(--ash); }
+
+    /* TWEAKS PANEL */
+    .tweaks-panel { position: fixed; bottom: 24px; right: 24px; width: 240px; background: white; border-radius: 16px; box-shadow: 0 8px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08); padding: 18px; z-index: 10000; font-family: var(--sans); display: none; }
+    .tweaks-panel.open { display: block; }
+    .tweaks-panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .tweaks-panel-head span { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .tweaks-close-btn { background: none; border: none; cursor: pointer; color: var(--ash); font-size: 15px; line-height: 1; padding: 2px; }
+    .tweak-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .tweak-key { font-size: 12px; color: var(--ash); }
+    .tweak-btns { display: flex; gap: 5px; }
+    .tweak-opt { padding: 4px 9px; border-radius: 6px; border: 1px solid rgba(107,101,96,0.2); background: transparent; font-size: 11px; cursor: pointer; color: var(--ash); font-family: var(--sans); transition: all 0.15s; }
+    .tweak-opt.on { background: var(--ink); color: white; border-color: var(--ink); }
+    .tweak-swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: border-color 0.15s; }
+    .tweak-swatch.on { border-color: var(--ink); }
+    .tweaks-divider { height: 1px; background: rgba(107,101,96,0.1); margin: 12px 0; }
+    .tweaks-trigger { position: fixed; bottom: 24px; right: 24px; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: white; border: none; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; z-index: 9999; box-shadow: 0 2px 12px rgba(0,0,0,0.2); transition: opacity 0.2s; }
+    .tweaks-trigger:hover { opacity: 0.8; }
+    .tweaks-trigger.hidden { display: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 920px) {
+      .container { padding: 0 24px; }
+      section { padding: calc(var(--section-pad) * 0.75) 0; }
+      .washi-divider { padding: 0 24px; }
+      .hero-inner, .feature-grid, #whatif .whatif-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { order: -1; }
+      .hero-text { text-align: center; }
+      .hero-text p, .hero-cta { max-width: none; justify-content: center; }
+      .problem-cards { grid-template-columns: 1fr; }
+      .testimonials { grid-template-columns: repeat(2,1fr); gap: 16px; }
+      .pillars-cols { grid-template-columns: repeat(2, 1fr); }
+      .pcol + .pcol { border-left: none; padding-left: 0; }
+      .pcol:nth-child(odd) { border-right: 1px solid var(--warm-deep); padding-right: 24px; padding-left: 0; }
+      .pcol:nth-child(even) { padding-right: 0; padding-left: 24px; }
+      .pcol:nth-child(3), .pcol:nth-child(4) { border-top: 1px solid var(--warm-deep); padding-top: 32px; }
+      .sb-stats { grid-template-columns: repeat(2, 1fr); }
+      .sb-stat + .sb-stat { border-left: none; padding-left: 0; }
+      .sb-stat:nth-child(odd) { border-right: 1px solid var(--warm-deep); padding-right: 24px; }
+      .sb-stat:nth-child(even) { padding-left: 24px; }
+      .sb-stat:nth-child(3), .sb-stat:nth-child(4) { border-top: 1px solid var(--warm-deep); padding-top: 24px; margin-top: 24px; }
+      .method-steps { grid-template-columns: repeat(2,1fr); gap: 24px; }
+      .method-steps::before { display: none; }
+      .feature-grid.flip > :first-child { order: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+      .phone { width: 220px; }
+      .runway-num { font-size: 48px; }
+      .tweaks-panel, .tweaks-trigger { display: none !important; }
+      #kakeibo-circle { max-width: 340px; }
+      .currency-cards { gap: 16px; }
+      .cur-card { min-width: 160px; padding: 24px 20px; }
+    }
+    @media (max-width: 480px) {
+      .pillars-cols { grid-template-columns: 1fr; }
+      .pcol:nth-child(odd) { border-right: none; padding-right: 0; }
+      .pcol:nth-child(n+2) { border-top: 1px solid var(--warm-deep); padding-top: 28px; }
+      .pcol:nth-child(3), .pcol:nth-child(4) { border-top: 1px solid var(--warm-deep); }
+      .sb-stats { grid-template-columns: 1fr; }
+      .sb-stat:nth-child(odd) { border-right: none; padding-right: 0; }
+      .sb-stat:nth-child(n+2) { border-top: 1px solid var(--warm-deep); padding-top: 20px; margin-top: 20px; }
+      .currency-cards { flex-direction: column; }
+      .cur-card { min-width: unset; width: 100%; }
+      .cur-total-amt { font-size: clamp(1.875rem, 6vw, 2.75rem); }
+      .testimonials { grid-template-columns: 1fr; gap: 14px; }
+      .testi { padding: 20px; }
+    }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      z-index: 99999;
+      background: var(--ink);
+      color: var(--offwhite);
+      padding: 8px 16px;
+      border-radius: 0 0 8px 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: top 0.15s;
+    }
+    .skip-link:focus-visible { top: 0; }
+
+    /* Focus indicators */
+    *:focus-visible {
+      outline: 2px solid var(--persimmon);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    *:focus:not(:focus-visible) { outline: none; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- SVG symbol definitions for Ko the fox -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="ko-sit" viewBox="0 0 90 112">
+      <g class="ko-tail-g">
+        <ellipse cx="74" cy="92" rx="19" ry="12" fill="#E8A43C" transform="rotate(-22 74 92)"/>
+        <ellipse cx="74" cy="92" rx="11" ry="6.5" fill="#FAF7F2" opacity="0.78" transform="rotate(-22 74 92)"/>
+      </g>
+      <ellipse cx="45" cy="90" rx="21" ry="16" fill="#D4704A"/>
+      <circle cx="45" cy="54" r="27" fill="#D4704A"/>
+      <polygon points="25,40 16,12 44,34" fill="#D4704A"/>
+      <polygon points="65,40 74,12 46,34" fill="#D4704A"/>
+      <polygon points="28,38 21,18 42,34" fill="#EAAA80" opacity="0.5"/>
+      <polygon points="62,38 69,18 48,34" fill="#EAAA80" opacity="0.5"/>
+      <ellipse cx="45" cy="58" rx="17" ry="15" fill="#E8A080" opacity="0.22"/>
+      <ellipse cx="36" cy="51" rx="4.2" ry="3.8" fill="#1A1510"/>
+      <ellipse cx="54" cy="51" rx="4.2" ry="3.8" fill="#1A1510"/>
+      <circle cx="37.5" cy="50" r="1.6" fill="white"/>
+      <circle cx="55.5" cy="50" r="1.6" fill="white"/>
+      <ellipse cx="45" cy="59" rx="2.6" ry="2.1" fill="#9A3020"/>
+      <ellipse cx="45" cy="63" rx="9" ry="5.5" fill="#E8A080" opacity="0.28"/>
+      <ellipse cx="34" cy="101" rx="7.5" ry="5" fill="#C86038"/>
+      <ellipse cx="56" cy="101" rx="7.5" ry="5" fill="#C86038"/>
+    </symbol>
+    <symbol id="ko-peek" viewBox="0 0 90 80">
+      <ellipse cx="45" cy="54" rx="27" ry="24" fill="#D4704A"/>
+      <polygon points="24,42 15,16 43,36" fill="#D4704A"/>
+      <polygon points="66,42 75,16 47,36" fill="#D4704A"/>
+      <polygon points="27,40 20,20 41,36" fill="#EAAA80" opacity="0.5"/>
+      <polygon points="63,40 70,20 49,36" fill="#EAAA80" opacity="0.5"/>
+      <ellipse cx="45" cy="58" rx="18" ry="15" fill="#E8A080" opacity="0.22"/>
+      <ellipse cx="36" cy="51" rx="4" ry="3.5" fill="#1A1510"/>
+      <ellipse cx="54" cy="51" rx="4" ry="3.5" fill="#1A1510"/>
+      <circle cx="37.2" cy="50" r="1.5" fill="white"/>
+      <circle cx="55.2" cy="50" r="1.5" fill="white"/>
+      <ellipse cx="45" cy="59" rx="2.4" ry="1.9" fill="#9A3020"/>
+      <ellipse cx="45" cy="63" rx="8" ry="5" fill="#E8A080" opacity="0.28"/>
+    </symbol>
+    <symbol id="ko-celebrate" viewBox="0 0 130 155">
+      <rect x="60" y="0" width="4" height="6" rx="2" fill="#B8842C"/>
+      <rect x="52" y="6" width="20" height="26" rx="10" fill="#E8A43C"/>
+      <ellipse cx="62" cy="19" rx="7.5" ry="10" fill="#FAF7F2" opacity="0.42"/>
+      <rect x="56" y="32" width="12" height="3" rx="1.5" fill="#B8842C"/>
+      <ellipse cx="18" cy="82" rx="8" ry="20" fill="#D4704A" transform="rotate(-55 18 82)"/>
+      <ellipse cx="105" cy="72" rx="8" ry="22" fill="#D4704A" transform="rotate(48 105 72)"/>
+      <ellipse cx="62" cy="118" rx="24" ry="18" fill="#D4704A"/>
+      <circle cx="62" cy="82" r="30" fill="#D4704A"/>
+      <polygon points="38,65 28,32 58,54" fill="#D4704A"/>
+      <polygon points="86,65 96,32 66,54" fill="#D4704A"/>
+      <polygon points="41,63 33,38 56,54" fill="#EAAA80" opacity="0.5"/>
+      <polygon points="83,63 91,38 68,54" fill="#EAAA80" opacity="0.5"/>
+      <ellipse cx="62" cy="86" rx="19" ry="16" fill="#E8A080" opacity="0.22"/>
+      <ellipse cx="52" cy="78" rx="4.5" ry="4" fill="#1A1510"/>
+      <ellipse cx="72" cy="78" rx="4.5" ry="4" fill="#1A1510"/>
+      <circle cx="53.5" cy="77" r="1.8" fill="white"/>
+      <circle cx="73.5" cy="77" r="1.8" fill="white"/>
+      <ellipse cx="62" cy="87" rx="3" ry="2.2" fill="#9A3020"/>
+      <ellipse cx="62" cy="91" rx="10" ry="6" fill="#E8A080" opacity="0.28"/>
+      <ellipse cx="96" cy="126" rx="22" ry="13" fill="#E8A43C" transform="rotate(-18 96 126)"/>
+      <ellipse cx="96" cy="126" rx="13" ry="7.5" fill="#FAF7F2" opacity="0.75" transform="rotate(-18 96 126)"/>
+      <ellipse cx="48" cy="133" rx="9" ry="6" fill="#C86038"/>
+      <ellipse cx="76" cy="133" rx="9" ry="6" fill="#C86038"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Tweaks trigger button -->
+<button class="tweaks-trigger" id="tweaksTrigger" onclick="openTweaks()" title="Design tweaks">⚙</button>
+
+<!-- Tweaks Panel -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <div class="tweaks-panel-head">
+    <span>Tweaks</span>
+    <button class="tweaks-close-btn" onclick="closeTweaks()">✕</button>
+  </div>
+  <div class="tweak-row">
+    <span class="tweak-key">Headings</span>
+    <div class="tweak-btns">
+      <button class="tweak-opt" id="tw-serif" onclick="setHeading('serif',this)">Serif</button>
+      <button class="tweak-opt on" id="tw-sans2" onclick="setHeading('sans',this)">Sans</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <span class="tweak-key">Mascot Ko</span>
+    <div class="tweak-btns">
+      <button class="tweak-opt" id="tw-ko-y" onclick="setKo(true,this)">Show</button>
+      <button class="tweak-opt on" id="tw-ko-n" onclick="setKo(false,this)">Hide</button>
+    </div>
+  </div>
+  <div class="tweaks-divider"></div>
+  <div class="tweak-row">
+    <span class="tweak-key">CTA color</span>
+    <div class="tweak-btns" style="gap:8px">
+      <div class="tweak-swatch on" style="background:#D4704A" onclick="setAccent('#D4704A',this)" title="Persimmon"></div>
+      <div class="tweak-swatch" style="background:#3D9B9B" onclick="setAccent('#3D9B9B',this)" title="Teal"></div>
+      <div class="tweak-swatch" style="background:#9B6FAF" onclick="setAccent('#9B6FAF',this)" title="Fuji"></div>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <span class="tweak-key">Spacing</span>
+    <div class="tweak-btns">
+      <button class="tweak-opt on" onclick="setSpacing('compact',this)">Compact</button>
+      <button class="tweak-opt" onclick="setSpacing('default',this)">Default</button>
+      <button class="tweak-opt" onclick="setSpacing('airy',this)">Airy</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#">
+        <div class="nav-dot"></div>
+        Yobi
+      </a>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a class="btn btn-ghost" href="#kakeibo-method">How it works</a>
+        <a class="btn btn-primary" href="#footer-cta">Download</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- ─── 1. HERO ─────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text reveal">
+        <div class="hero-eyebrow">Mindful finance for freelancers</div>
+        <h1>Always know how many <em>days</em> you have left.</h1>
+        <p>Yobi combines Japanese Kakeibo mindfulness with forward-looking balance projections, so you can make financial decisions without panic.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-primary-lg" href="#footer-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="opacity:.9"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download on the App Store
+          </a>
+          <span class="hero-cta-note">Free to download</span>
+        </div>
+      </div>
+
+      <!-- Kakeibo cycle circle -->
+      <div class="hero-visual reveal" style="transition-delay:0.15s">
+        <div class="kakeibo-circle-wrap">
+          <svg id="kakeibo-circle" viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg" aria-label="The Kakeibo cycle: Awareness, Intention, Tracking, Reflection">
+            <!-- Faint background kanji -->
+            <text x="300" y="312" text-anchor="middle" font-size="108" font-family="serif" style="fill: var(--ink)" opacity="0.03">予備</text>
+
+            <!-- Soft inner fill -->
+            <circle cx="300" cy="280" r="138" fill="rgba(243,238,230,0.5)"/>
+
+            <!-- Outer dashed orbit -->
+            <circle cx="300" cy="280" r="140" fill="none" stroke="rgba(107,101,96,0.18)" stroke-width="1.5" stroke-dasharray="7 5"/>
+
+            <!-- Node halos -->
+            <circle cx="300" cy="140" r="24" style="fill: var(--persimmon)" opacity="0.1"/>
+            <circle cx="440" cy="280" r="24" style="fill: var(--gold)" opacity="0.1"/>
+            <circle cx="300" cy="420" r="24" style="fill: var(--teal)" opacity="0.1"/>
+            <circle cx="160" cy="280" r="24" style="fill: var(--purple)" opacity="0.1"/>
+
+            <!-- Node dots -->
+            <circle cx="300" cy="140" r="9" style="fill: var(--persimmon)"/>
+            <circle cx="440" cy="280" r="9" style="fill: var(--gold)"/>
+            <circle cx="300" cy="420" r="9" style="fill: var(--teal)"/>
+            <circle cx="160" cy="280" r="9" style="fill: var(--purple)"/>
+
+            <!-- Orbit path for animateMotion -->
+            <defs>
+              <path id="orbitPath" d="M 300 140 A 140 140 0 0 1 440 280 A 140 140 0 0 1 300 420 A 140 140 0 0 1 160 280 A 140 140 0 0 1 300 140" fill="none"/>
+            </defs>
+
+            <!-- Animated traveling dot -->
+            <circle r="8" style="fill: var(--offwhite); stroke: var(--gold)" stroke-width="2.5" opacity="0.95">
+              <animateMotion dur="10s" repeatCount="indefinite">
+                <mpath href="#orbitPath"/>
+              </animateMotion>
+            </circle>
+
+            <!-- Step numbers -->
+            <text x="300" y="82" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--persimmon)" letter-spacing="3" font-weight="700">01</text>
+            <text x="472" y="262" text-anchor="start" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--gold)" letter-spacing="3" font-weight="700">02</text>
+            <text x="300" y="454" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--teal)" letter-spacing="3" font-weight="700">03</text>
+            <text x="128" y="262" text-anchor="end" font-family="'Noto Sans', sans-serif" font-size="10" style="fill: var(--purple)" letter-spacing="3" font-weight="700">04</text>
+
+            <!-- Step names -->
+            <text x="300" y="100" text-anchor="middle" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Awareness</text>
+            <text x="472" y="280" text-anchor="start" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Intention</text>
+            <text x="300" y="472" text-anchor="middle" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Tracking</text>
+            <text x="128" y="280" text-anchor="end" font-family="'Noto Serif JP', Georgia, serif" font-size="18" style="fill: var(--ink)">Reflection</text>
+
+            <!-- Questions -->
+            <text x="300" y="119" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">How much do I have?</text>
+            <text x="472" y="299" text-anchor="start" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">How much to save?</text>
+            <text x="300" y="491" text-anchor="middle" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">Where is it going?</text>
+            <text x="128" y="299" text-anchor="end" font-family="'Noto Sans', sans-serif" font-size="12" style="fill: var(--ash)">How can I do better?</text>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 2. PROBLEM ──────────────────────────────────────────────────────────── -->
+<section id="problem">
+  <div class="container">
+    <div class="problem-head reveal">
+      <p class="sec-eyebrow">The problem</p>
+      <h2 class="sec-display">Most budgeting apps tell you<br>where your money <em>went</em>.</h2>
+      <hr class="sec-rule">
+      <p class="problem-answer">Yobi tells you where it's going.</p>
+    </div>
+    <div class="problem-cards reveal" style="transition-delay:0.1s">
+      <div class="pc before">
+        <h3>Before Yobi</h3>
+        <p>You check your balance and feel vague dread. You don't know if you're okay.</p>
+      </div>
+      <div class="pc after">
+        <h3>After Yobi</h3>
+        <p>You open the app and see 47 days of runway. You know exactly what's coming.</p>
+      </div>
+      <div class="pc diff">
+        <p>Projection + intention.<br>Not just history.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 3. THE KAKEIBO METHOD ────────────────────────────────────────────────── -->
+<section id="kakeibo-method">
+  <div class="container">
+    <div class="method-head reveal">
+      <p class="sec-eyebrow">The Kakeibo method</p>
+      <h2 class="sec-display">120 years old.<br><em>Built for today.</em></h2>
+      <hr class="sec-rule">
+      <p class="sec-intro">The Japanese household ledger created by Motoko Hani in 1904, reduces personal finance to four honest questions. Yobi answers all of them.</p>
+    </div>
+    <div class="method-steps reveal" style="transition-delay:0.1s">
+      <div class="method-step">
+        <div class="method-step-num" style="color:var(--persimmon)">01</div>
+        <div class="method-step-dot" style="background:var(--persimmon)"></div>
+        <div class="method-step-name">Awareness</div>
+        <div class="method-step-q">"How much do I have?"</div>
+        <div class="method-step-desc">See your real balance across every wallet and currency, projected forward in time. No guessing.</div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num" style="color:var(--gold)">02</div>
+        <div class="method-step-dot" style="background:var(--gold)"></div>
+        <div class="method-step-name">Intention</div>
+        <div class="method-step-q">"How much do I want to save?"</div>
+        <div class="method-step-desc">Set your savings target before spending. Toggle planned expenses to see your runway shift in real time.</div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num" style="color:var(--teal)">03</div>
+        <div class="method-step-dot" style="background:var(--teal)"></div>
+        <div class="method-step-name">Tracking</div>
+        <div class="method-step-q">"Where is my money going?"</div>
+        <div class="method-step-desc">Every expense belongs to one of four pillars: not just a category, but an intention. Needs. Wants. Growth. Surprises.</div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num" style="color:var(--purple)">04</div>
+        <div class="method-step-dot" style="background:var(--purple)"></div>
+        <div class="method-step-name">Reflection</div>
+        <div class="method-step-q">"How can I do better next month?"</div>
+        <div class="method-step-desc">Ko walks you through a quiet five-minute ritual at the start of each month. No scores. Just honest questions.</div>
+      </div>
+    </div>
+
+    <!-- Transition line -->
+    <div class="reveal" style="text-align:center;margin-top:56px;font-size:14px;color:var(--ash);font-style:italic;transition-delay:0.2s">
+      Awareness → Intention → Tracking → Reflection. Then start again.
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 4. RUNWAY DASHBOARD ─────────────────────────────────────────────────── -->
+<section id="runway">
+  <div class="container">
+    <div class="feature-grid">
+      <div class="reveal" style="display:flex;justify-content:center">
+        <div class="phone">
+          <div class="phone-island"></div>
+          <div class="phone-screen" aria-hidden="true">
+            <div class="screen-pad">
+              <div class="screen-status"><span class="screen-time">9:41</span><span class="screen-icons">▲▲▲ ●●●</span></div>
+              <div style="margin-bottom:16px">
+                <div style="font-family:var(--serif);font-size:18px;color:var(--ink)">Your Runway</div>
+              </div>
+              <div style="display:flex;gap:8px;margin-bottom:18px">
+                <div class="wallet-chip" style="flex:1"><span class="cc">USD</span><span class="ca">$4,230</span></div>
+                <div class="wallet-chip" style="flex:1"><span class="cc">EUR</span><span class="ca">€2,100</span></div>
+              </div>
+              <div style="background:var(--warm-mid);border-radius:14px;padding:20px 16px;text-align:center;margin-bottom:16px">
+                <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);opacity:0.6;margin-bottom:8px">Days of runway</div>
+                <div style="font-family:var(--serif);font-size:72px;color:var(--gold);line-height:1" class="count-trigger" data-target="47">47</div>
+                <div style="font-size:12px;color:var(--ash)">Amber · Watch your spending</div>
+              </div>
+              <svg viewBox="0 0 230 70" fill="none" style="width:100%;margin-bottom:12px">
+                <defs><linearGradient id="cg2" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#E8A43C" stop-opacity="0.22"/><stop offset="100%" stop-color="#E8A43C" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0,60 C45,52 90,38 130,32 S200,40 230,55" stroke="#E8A43C" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M0,60 C45,52 90,38 130,32 S200,40 230,55 L230,70 L0,70Z" fill="url(#cg2)"/>
+                <line x1="130" y1="0" x2="130" y2="70" stroke="#E8A43C" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+                <text x="132" y="12" font-size="8" fill="#E8A43C" opacity="0.8" font-family="sans-serif">Today</text>
+              </svg>
+              <div class="tx-section">
+                <div class="tx-head">Income &amp; Expenses factored in</div>
+                <div class="tx"><div class="tx-info"><span class="tx-name">Freelance retainer</span><span class="tx-cat">Monthly income</span></div><span class="tx-amt pos">+$4,500</span></div>
+                <div class="tx"><div class="tx-info"><span class="tx-name">Rent + utilities</span><span class="tx-cat">Survival</span></div><span class="tx-amt neg">−$1,450</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.12s">
+        <div class="feat-label">01 · Awareness</div>
+        <h2 class="feat-h2">Your runway, at a glance.</h2>
+        <p class="feat-body">Yobi shows you one number that matters: how many days until your balance hits zero, combining all your accounts with live FX rates. Green means go. Amber means watch. Red means act.</p>
+        <div class="feat-bullets">
+          <div class="feat-bullet"><div class="bullet-dot" style="background:rgba(232,164,60,0.15)">📈</div>Balance chart with projected trend</div>
+          <div class="feat-bullet"><div class="bullet-dot" style="background:rgba(61,155,155,0.12)">💱</div>Multi-wallet, multi-currency support</div>
+          <div class="feat-bullet"><div class="bullet-dot" style="background:rgba(212,112,74,0.12)">🔄</div>Recurring income &amp; expenses factored in</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 5. WHAT-IF PLAYGROUND ───────────────────────────────────────────────── -->
+<section id="whatif">
+  <div class="container">
+    <div class="whatif-inner">
+      <div class="reveal">
+        <div class="feat-label teal">02 · Intention</div>
+        <h2 class="feat-h2">Test your decisions before you make them.</h2>
+        <p class="feat-body">Tap any planned expense to toggle it off. Watch your runway extend in real time. Yobi turns "should I buy this?" into a concrete, visual answer.</p>
+        <div class="ko-reaction">
+          <svg width="70" height="58" role="img" aria-label="Ko the fox"><use href="#ko-peek"/></svg>
+          <div class="ko-say" id="koSay" aria-live="polite">Ko is watching your runway shift in real time.</div>
+        </div>
+      </div>
+      <div class="reveal whatif-phone-wrap" style="transition-delay:0.15s">
+        <div class="phone">
+          <div class="phone-island"></div>
+          <div class="phone-screen">
+            <div class="screen-pad" style="padding-top:52px">
+              <div class="screen-header" style="margin-bottom:18px">
+                <span class="screen-title">What If?</span>
+                <span class="screen-kanji">間</span>
+              </div>
+              <div class="wi-runway-display" aria-live="polite" aria-label="Projected runway">
+                <span class="wi-runway-num red" id="wiRunway">31</span>
+                <div class="wi-sub-label">days of runway</div>
+              </div>
+              <svg viewBox="0 0 230 55" fill="none" style="width:100%;margin:10px 0">
+                <defs><linearGradient id="cg3" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#D4704A" stop-opacity="0.22"/><stop offset="100%" stop-color="#D4704A" stop-opacity="0"/></linearGradient></defs>
+                <path id="wiChartLine" d="M0,40 C50,38 100,35 130,32 S190,28 230,48" stroke="#D4704A" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path id="wiChartFill" d="M0,40 C50,38 100,35 130,32 S190,28 230,48 L230,55 L0,55Z" fill="url(#cg3)"/>
+              </svg>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);opacity:0.55;margin-bottom:10px">Toggle expenses</div>
+              <div class="wi-expense">
+                <div class="wi-exp-info"><div class="wi-name">Streaming Bundle</div><div class="wi-sub">Optional · monthly</div></div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span class="wi-amt">−$28</span>
+                  <label class="ios-tog"><input type="checkbox" id="wiTog1" aria-label="Skip Streaming Bundle ($28/mo)" onchange="updateWhatIf()"><div class="ios-tog-track"><div class="ios-tog-thumb"></div></div></label>
+                </div>
+              </div>
+              <div class="wi-expense">
+                <div class="wi-exp-info"><div class="wi-name">Design Software</div><div class="wi-sub">Culture · annual ÷ 12</div></div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span class="wi-amt">−$54</span>
+                  <label class="ios-tog"><input type="checkbox" id="wiTog2" aria-label="Skip Design Software ($54/mo)" onchange="updateWhatIf()"><div class="ios-tog-track"><div class="ios-tog-thumb"></div></div></label>
+                </div>
+              </div>
+              <div class="wi-expense">
+                <div class="wi-exp-info"><div class="wi-name">Gym Membership</div><div class="wi-sub">Optional · monthly</div></div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span class="wi-amt">−$40</span>
+                  <label class="ios-tog"><input type="checkbox" id="wiTog3" aria-label="Skip Gym Membership ($40/mo)" onchange="updateWhatIf()"><div class="ios-tog-track"><div class="ios-tog-thumb"></div></div></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 6. FOUR PILLARS ─────────────────────────────────────────────────────── -->
+<section id="pillars">
+  <div class="container">
+    <div class="pillars-header reveal">
+      <p class="sec-eyebrow">Kakeibo pillars</p>
+      <h2 class="sec-display">Not just what you spend,<br>but <em>why</em>.</h2>
+      <hr class="sec-rule">
+      <p class="sec-intro">Traditional budgets sort expenses into categories. Kakeibo sorts them by intention. Every purchase in Yobi belongs to one of four pillars — not to judge, but to help you understand yourself.</p>
+    </div>
+    <div class="pillars-cols">
+      <div class="pcol survival reveal" style="transition-delay:0.05s">
+        <div class="pcol-kanji" aria-hidden="true">生</div>
+        <h3 class="pcol-name">Survival</h3>
+        <p class="pcol-desc">The non-negotiables. Rent, groceries, health, transport. What keeps life running.</p>
+        <div class="pcol-tags">
+          <span class="pcol-tag">rent</span>
+          <span class="pcol-tag">groceries</span>
+          <span class="pcol-tag">transport</span>
+          <span class="pcol-tag">health</span>
+        </div>
+      </div>
+      <div class="pcol optional reveal" style="transition-delay:0.15s">
+        <div class="pcol-kanji" aria-hidden="true">楽</div>
+        <h3 class="pcol-name">Optional</h3>
+        <p class="pcol-desc">Life's pleasures. Dining out, travel, subscriptions, treats. The texture of living.</p>
+        <div class="pcol-tags">
+          <span class="pcol-tag">dining out</span>
+          <span class="pcol-tag">travel</span>
+          <span class="pcol-tag">subscriptions</span>
+        </div>
+      </div>
+      <div class="pcol culture reveal" style="transition-delay:0.25s">
+        <div class="pcol-kanji" aria-hidden="true">知</div>
+        <h3 class="pcol-name">Culture</h3>
+        <p class="pcol-desc">Investment in yourself. Books, courses, gym, therapy. The long game.</p>
+        <div class="pcol-tags">
+          <span class="pcol-tag">books</span>
+          <span class="pcol-tag">courses</span>
+          <span class="pcol-tag">gym</span>
+          <span class="pcol-tag">therapy</span>
+        </div>
+      </div>
+      <div class="pcol extra reveal" style="transition-delay:0.35s">
+        <div class="pcol-kanji" aria-hidden="true">備</div>
+        <h3 class="pcol-name">Extra</h3>
+        <p class="pcol-desc">Life's surprises. Gifts, repairs, vet bills, the unexpected. Held with openness.</p>
+        <div class="pcol-tags">
+          <span class="pcol-tag">gifts</span>
+          <span class="pcol-tag">repairs</span>
+          <span class="pcol-tag">emergencies</span>
+        </div>
+      </div>
+    </div>
+    <p class="pillar-bridge reveal" style="transition-delay:0.18s">How the four pillars distribute across a typical month.</p>
+    <div class="pillar-chart reveal" style="transition-delay:0.2s" role="img" aria-label="A typical May pillar breakdown: Survival 40%, Optional 25%, Culture 20%, Extra 15%">
+      <div class="chart-label-row">A typical May · sample</div>
+      <div class="sb-stats">
+        <div class="sb-stat survival">
+          <div class="sb-num">40<span class="sb-unit">%</span></div>
+          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--persimmon)" data-w="40%"></div></div>
+          <div class="sb-name">Survival</div>
+        </div>
+        <div class="sb-stat optional">
+          <div class="sb-num">25<span class="sb-unit">%</span></div>
+          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--teal)" data-w="25%"></div></div>
+          <div class="sb-name">Optional</div>
+        </div>
+        <div class="sb-stat culture">
+          <div class="sb-num">20<span class="sb-unit">%</span></div>
+          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--purple)" data-w="20%"></div></div>
+          <div class="sb-name">Culture</div>
+        </div>
+        <div class="sb-stat extra">
+          <div class="sb-num">15<span class="sb-unit">%</span></div>
+          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--gold)" data-w="15%"></div></div>
+          <div class="sb-name">Extra</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Method transition -->
+    <div style="text-align:center;margin-top:48px;padding:20px;border-top:1px solid rgba(107,101,96,0.1);transition-delay:0.25s" class="reveal">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink);margin-bottom:8px">03 · Tracking</div>
+      <p style="font-size:15px;color:var(--ash);font-style:italic;max-width:480px;margin:0 auto">Every transaction asks: is this a need, a want, a growth investment, or a surprise? The answer trains your awareness over time.</p>
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 7. MONTHLY REFLECTION ───────────────────────────────────────────────── -->
+<section id="reflection">
+  <div class="container">
+    <div class="feature-grid flip">
+      <div class="reveal">
+        <div class="feat-label purple">04 · Reflection</div>
+        <h2 class="feat-h2">The ritual that makes the difference.</h2>
+        <p class="feat-body">At the start of each month, Ko gently walks you through how last month went. Not as judgment. As curiosity. Three questions. A pillar breakdown. A quiet letter from Ko. Five minutes of honest reflection.</p>
+        <div style="background:white;border-radius:14px;padding:18px 20px;box-shadow:0 2px 16px rgba(0,0,0,0.05);border:1px solid rgba(155,111,175,0.22)">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:6px">Ko notices</div>
+          <p style="font-size:14px;font-style:italic;color:var(--ash);line-height:1.55">"Your Optional spending was down 18% from last month. What changed?"</p>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.12s;display:flex;justify-content:center">
+        <div class="phone">
+          <div class="phone-island"></div>
+          <div class="phone-screen" aria-hidden="true">
+            <div class="refl-screen-head">
+              <svg width="36" height="36" style="flex-shrink:0"><use href="#ko-peek"/></svg>
+              <div>
+                <div class="rtitle">May Reflection</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.72)">5 questions · ~5 min</div>
+              </div>
+            </div>
+            <div class="refl-body" style="padding-top:14px">
+              <div class="ko-letter">
+                <div class="ko-letter-label">From Ko</div>
+                <div class="ko-letter-text">"Ko notices your Optional spending was down 18% from last month. What changed?"</div>
+              </div>
+              <div class="refl-prompt">
+                <div class="refl-prompt-label">What went well with your spending?</div>
+                <div class="refl-prompt-text" style="color:var(--ink)">I cooked at home more and didn't impulse-buy anything online...</div>
+              </div>
+              <div class="refl-prompt">
+                <div class="refl-prompt-label">What surprised you?</div>
+                <div class="refl-prompt-text" style="opacity:0.45;font-style:italic">Tap to reflect...</div>
+              </div>
+              <div class="refl-prompt">
+                <div class="refl-prompt-label">One intention for next month</div>
+                <div class="refl-prompt-text" style="opacity:0.45;font-style:italic">Tap to set...</div>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center;margin-top:12px;padding:12px;background:white;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,0.05)">
+                <svg viewBox="0 0 60 60" style="width:48px;height:48px;flex-shrink:0">
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#EDE5D8" stroke-width="11"/>
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#D4704A" stroke-width="11" stroke-dasharray="55 83" stroke-dashoffset="0"/>
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#3D9B9B" stroke-width="11" stroke-dasharray="34 104" stroke-dashoffset="-55"/>
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#9B6FAF" stroke-width="11" stroke-dasharray="27 111" stroke-dashoffset="-89"/>
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#E8A43C" stroke-width="11" stroke-dasharray="21 117" stroke-dashoffset="-116"/>
+                </svg>
+                <div style="font-size:10px;color:var(--ash);line-height:1.7">
+                  <div><span style="color:var(--persimmon)">■</span> Survival 40%</div>
+                  <div><span style="color:var(--teal)">■</span> Optional 25%</div>
+                  <div><span style="color:var(--purple)">■</span> Culture 20%</div>
+                  <div><span style="color:var(--gold)">■</span> Extra 15%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 8. MULTI-CURRENCY ───────────────────────────────────────────────────── -->
+<section id="currency" aria-labelledby="currency-heading">
+  <div class="container">
+    <div class="reveal">
+      <p class="sec-eyebrow">Multi-currency</p>
+      <h2 id="currency-heading" class="sec-display">Wherever you earn,<br>wherever you <em>spend</em>.</h2>
+      <hr class="sec-rule">
+      <p class="sec-intro">Each currency in its own wallet, totals converted at live rates. Yobi is built for people whose financial life doesn't fit one country.</p>
+    </div>
+    <div class="currency-cards">
+      <div class="cur-card usd reveal" style="transition-delay:0.10s">
+        <div class="cur-flag" aria-hidden="true">🇺🇸</div>
+        <abbr class="cur-code" title="US Dollar">USD</abbr>
+        <data class="cur-amount" value="4230.00">$4,230.00</data>
+        <span class="fx-badge">Base</span>
+      </div>
+      <div class="cur-card eur reveal" style="transition-delay:0.22s">
+        <div class="cur-flag" aria-hidden="true">🇪🇺</div>
+        <abbr class="cur-code" title="Euro">EUR</abbr>
+        <data class="cur-amount" value="2100.00">€2,100.00</data>
+        <span class="fx-badge">1 EUR = 1.08 USD</span>
+      </div>
+      <div class="cur-card thb reveal" style="transition-delay:0.34s">
+        <div class="cur-flag" aria-hidden="true">🇹🇭</div>
+        <abbr class="cur-code" title="Thai Baht">THB</abbr>
+        <data class="cur-amount" value="12500">฿12,500</data>
+        <span class="fx-badge">1 THB = 0.029 USD</span>
+      </div>
+    </div>
+    <div class="cur-total reveal" style="transition-delay:0.50s">
+      <div class="cur-ledger">
+        <div class="cur-ledger-row">
+          <span class="cur-ledger-code"><span class="cur-ledger-dot" style="background:var(--persimmon)" aria-hidden="true"></span>USD</span>
+          <span class="cur-ledger-amt">$4,230.00</span>
+        </div>
+        <div class="cur-ledger-row">
+          <span class="cur-ledger-code"><span class="cur-ledger-dot" style="background:var(--gold)" aria-hidden="true"></span>EUR</span>
+          <span class="cur-ledger-amt">€2,100.00</span>
+        </div>
+        <div class="cur-ledger-row">
+          <span class="cur-ledger-code"><span class="cur-ledger-dot" style="background:var(--teal)" aria-hidden="true"></span>THB</span>
+          <span class="cur-ledger-amt">฿12,500</span>
+        </div>
+        <div class="cur-ledger-total">
+          <span class="cur-ledger-total-label">Total</span>
+          <div class="cur-total-amt" aria-label="approximately $8,906.42"><span aria-hidden="true">≈ $8,906</span><span aria-hidden="true">.42</span></div>
+        </div>
+      </div>
+      <div class="cur-rates-note">Rates sync automatically</div>
+    </div>
+  </div>
+</section>
+
+<div class="washi-divider"></div>
+
+<!-- ─── 9. PHILOSOPHY + TESTIMONIALS ────────────────────────────────────────── -->
+<section id="philosophy">
+  <div class="container">
+    <div class="reveal">
+      <div class="phi-bar"></div>
+      <p class="phi-quote">"家計簿: The Japanese practice of recording every yen with intention has guided households for over a century. Yobi brings this discipline into the age of freelancing."</p>
+    </div>
+    <div class="testimonials reveal" style="transition-delay:0.1s">
+      <div class="testi">
+        <p>"I stopped dreading my balance and started understanding it."</p>
+        <div class="testi-author">Freelance designer, Lisbon</div>
+      </div>
+      <div class="testi">
+        <p>"The pillars changed how I think about money, not just track it."</p>
+        <div class="testi-author">Remote developer, Bangkok</div>
+      </div>
+      <div class="testi">
+        <p>"Ko's letter made me laugh and then actually think."</p>
+        <div class="testi-author">Consultant, Zurich</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 10. FOOTER CTA ───────────────────────────────────────────────────────── -->
+<section id="footer-cta">
+  <div class="container">
+    <div class="footer-ko-wrap">
+      <svg width="140" height="160" role="img" aria-label="Ko the fox celebrating" style="filter:drop-shadow(0 12px 32px rgba(26,21,16,0.2))"><use href="#ko-celebrate"/></svg>
+    </div>
+    <p class="sec-eyebrow reveal">Get started</p>
+    <h2 class="reveal">Your runway starts today.</h2>
+    <p class="reveal" style="transition-delay:0.1s">Free to download. The clarity is yours.</p>
+    <a class="appstore-btn reveal" href="#" style="transition-delay:0.2s">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div class="as-text">
+        <small>Download on the</small>
+        <strong>App Store</strong>
+      </div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="nav-dot"></div> Yobi</div>
+      <div class="footer-legal">© 2026 Yobi · Know your runway. Spend with intention.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Apply defaults on load
+  document.addEventListener('DOMContentLoaded', () => {
+    // Ko hidden by default
+    document.querySelectorAll('.ko-reaction,.footer-ko-wrap').forEach(el => el.style.opacity = '0');
+    // Compact spacing
+    document.documentElement.style.setProperty('--section-pad', '80px');
+  });
+
+  // ── Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+  // ── Tweaks panel
+  function openTweaks() {
+    document.getElementById('tweaksPanel').classList.add('open');
+    document.getElementById('tweaksTrigger').classList.add('hidden');
+  }
+  function closeTweaks() {
+    document.getElementById('tweaksPanel').classList.remove('open');
+    document.getElementById('tweaksTrigger').classList.remove('hidden');
+  }
+  function setHeading(style, el) {
+    document.querySelectorAll('#tw-serif,#tw-sans2').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+    document.querySelectorAll('h1,h2,h3').forEach(h => h.style.fontFamily = style === 'sans' ? 'var(--sans)' : 'var(--serif)');
+  }
+  function setKo(show, el) {
+    document.querySelectorAll('#tw-ko-y,#tw-ko-n').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+    document.querySelectorAll('.ko-reaction,.footer-ko-wrap').forEach(el => el.style.opacity = show ? '1' : '0');
+  }
+  function setAccent(color, el) {
+    document.querySelectorAll('.tweak-swatch').forEach(s => s.classList.remove('on'));
+    el.classList.add('on');
+    document.documentElement.style.setProperty('--persimmon', color);
+  }
+  function setSpacing(val, el) {
+    document.querySelectorAll('.tweaks-panel .tweak-opt').forEach(b => {
+      if (['compact','default','airy'].includes(b.textContent.toLowerCase())) b.classList.remove('on');
+    });
+    el.classList.add('on');
+    const map = { compact: '80px', default: '120px', airy: '160px' };
+    document.documentElement.style.setProperty('--section-pad', map[val] || '80px');
+  }
+
+  // ── Scroll reveal
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // ── Pillar bar chart animation
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.bar-fill').forEach((bar, i) => { bar.style.transitionDelay = (i * 60) + 'ms'; bar.style.transform = 'scaleX(' + parseFloat(bar.dataset.w) / 100 + ')'; });
+        barObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.pillar-chart').forEach(el => barObs.observe(el));
+
+  // ── Count-up animation
+  function countUp(el, target, duration) {
+    const start = Date.now();
+    const tick = () => {
+      const t = Math.min((Date.now() - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(ease * target);
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        countUp(e.target, parseInt(e.target.dataset.target), 1200);
+        countObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.count-trigger').forEach(el => countObs.observe(el));
+
+  // ── What-If interactive
+  function updateWhatIf() {
+    const savings = [28, 54, 40];
+    let removed = 0;
+    [1,2,3].forEach((n,i) => {
+      if (!document.getElementById('wiTog'+n).checked) removed += savings[i];
+    });
+    const newDays = Math.round(31 + removed * 0.28);
+    const el = document.getElementById('wiRunway');
+    countUp(el, newDays, 500);
+    setTimeout(() => { el.className = 'wi-runway-num' + (newDays < 35 ? ' red' : ''); }, 100);
+    const lineColor = newDays < 35 ? '#D4704A' : '#E8A43C';
+    document.getElementById('wiChartLine').setAttribute('stroke', lineColor);
+    document.querySelectorAll('#cg3 stop').forEach(s => s.setAttribute('stop-color', lineColor));
+    const says = removed === 0
+      ? 'Ko is watching your runway shift in real time.'
+      : removed < 50
+      ? `Ko notices ${newDays} days of runway if you skip that.`
+      : `Ko sees ${newDays} days. More room to breathe.`;
+    document.getElementById('koSay').textContent = says;
+  }
+</script>
+</body>
+</html>
