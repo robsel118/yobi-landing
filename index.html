@@ -171,22 +171,24 @@
     .pcol.optional .pcol-tag { border-color: color-mix(in srgb, var(--teal) 25%, var(--warm-muted)); }
     .pcol.culture  .pcol-tag { border-color: color-mix(in srgb, var(--purple) 25%, var(--warm-muted)); }
     .pcol.extra    .pcol-tag { border-color: color-mix(in srgb, var(--gold) 25%, var(--warm-muted)); }
-    .pillar-chart { margin: 0 auto; padding: 0; background: none; border-radius: 0; box-shadow: none; }
-    .chart-label-row { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--ash) 60%, transparent); margin-bottom: 28px; }
-    .sb-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
-    .sb-stat { padding: 0 32px 0 0; }
-    .sb-stat + .sb-stat { border-left: 1px solid var(--warm-deep); padding-left: 32px; padding-right: 32px; }
-    .sb-stat:last-child { padding-right: 0; }
-    .sb-num { font-family: var(--serif); font-size: clamp(36px, 4vw, 54px); font-weight: 700; line-height: 1; margin-bottom: 14px; }
-    .sb-unit { font-size: 0.5em; font-weight: 400; vertical-align: super; }
-    .sb-stat.survival .sb-num { color: var(--persimmon); }
-    .sb-stat.optional .sb-num { color: var(--teal); }
-    .sb-stat.culture  .sb-num { color: var(--purple); }
-    .sb-stat.extra    .sb-num { color: var(--gold); }
-    .sb-bar-wrap { height: 4px; background: var(--warm-deep); border-radius: 2px; overflow: hidden; margin-bottom: 12px; }
-    .sb-name { font-size: 12px; color: var(--ash); letter-spacing: 0.04em; }
-    .bar-fill { height: 100%; border-radius: 2px; width: 100%; transform: scaleX(0); transform-origin: left center; transition: transform 1.1s cubic-bezier(0.16,1,0.3,1); }
-    @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
+    .pillar-chart { margin: 0 auto; padding: 0; }
+    .chart-label-row { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--ash) 60%, transparent); margin-bottom: 16px; }
+    .disk-bar { display: flex; height: 48px; border-radius: 8px; overflow: hidden; gap: 3px; background: var(--offwhite); }
+    .disk-seg { transform: scaleX(0); transform-origin: left center; transition: transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .disk-seg.survival { background: var(--persimmon); }
+    .disk-seg.optional { background: var(--teal); }
+    .disk-seg.culture  { background: var(--purple); }
+    .disk-seg.extra    { background: var(--gold); }
+    .disk-labels { display: flex; gap: 3px; margin-top: 6px; }
+    .disk-lbl { display: flex; flex-direction: column; gap: 4px; padding-top: 10px; }
+
+    .dl-pct { font-family: var(--serif); font-size: clamp(18px, 2vw, 30px); font-weight: 700; line-height: 1; }
+    .disk-lbl.survival .dl-pct { color: var(--persimmon); }
+    .disk-lbl.optional .dl-pct { color: var(--teal); }
+    .disk-lbl.culture  .dl-pct { color: var(--purple); }
+    .disk-lbl.extra    .dl-pct { color: var(--gold); }
+    .dl-name { font-size: 11px; letter-spacing: 0.05em; color: var(--ash); }
+    @media (prefers-reduced-motion: reduce) { .disk-seg { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .reveal { transition: none; opacity: 1; transform: none; } }
 
     /* WHAT-IF */
@@ -314,11 +316,7 @@
       .pcol:nth-child(odd) { border-right: 1px solid var(--warm-deep); padding-right: 24px; padding-left: 0; }
       .pcol:nth-child(even) { padding-right: 0; padding-left: 24px; }
       .pcol:nth-child(3), .pcol:nth-child(4) { border-top: 1px solid var(--warm-deep); padding-top: 32px; }
-      .sb-stats { grid-template-columns: repeat(2, 1fr); }
-      .sb-stat + .sb-stat { border-left: none; padding-left: 0; }
-      .sb-stat:nth-child(odd) { border-right: 1px solid var(--warm-deep); padding-right: 24px; }
-      .sb-stat:nth-child(even) { padding-left: 24px; }
-      .sb-stat:nth-child(3), .sb-stat:nth-child(4) { border-top: 1px solid var(--warm-deep); padding-top: 24px; margin-top: 24px; }
+      .disk-bar { height: 36px; }
       .kakeibo-inner { grid-template-columns: 1fr; gap: 48px; }
       .kakeibo-right { order: -1; }
       .feature-grid.flip > :first-child { order: 1; }
@@ -335,9 +333,7 @@
       .pcol:nth-child(odd) { border-right: none; padding-right: 0; }
       .pcol:nth-child(n+2) { border-top: 1px solid var(--warm-deep); padding-top: 28px; }
       .pcol:nth-child(3), .pcol:nth-child(4) { border-top: 1px solid var(--warm-deep); }
-      .sb-stats { grid-template-columns: 1fr; }
-      .sb-stat:nth-child(odd) { border-right: none; padding-right: 0; }
-      .sb-stat:nth-child(n+2) { border-top: 1px solid var(--warm-deep); padding-top: 20px; margin-top: 20px; }
+      .disk-bar { height: 28px; border-radius: 4px; }
       .currency-cards { flex-direction: column; }
       .cur-card { min-width: unset; width: 100%; }
       .cur-total-amt { font-size: clamp(1.875rem, 6vw, 2.75rem); }
@@ -806,27 +802,17 @@
     <p class="pillar-bridge reveal" style="transition-delay:0.18s">How the four pillars distribute across a typical month.</p>
     <div class="pillar-chart reveal" style="transition-delay:0.2s" role="img" aria-label="A typical May pillar breakdown: Survival 40%, Optional 25%, Culture 20%, Extra 15%">
       <div class="chart-label-row">A typical May · sample</div>
-      <div class="sb-stats">
-        <div class="sb-stat survival">
-          <div class="sb-num">40<span class="sb-unit">%</span></div>
-          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--persimmon)" data-w="40%"></div></div>
-          <div class="sb-name">Survival</div>
-        </div>
-        <div class="sb-stat optional">
-          <div class="sb-num">25<span class="sb-unit">%</span></div>
-          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--teal)" data-w="25%"></div></div>
-          <div class="sb-name">Optional</div>
-        </div>
-        <div class="sb-stat culture">
-          <div class="sb-num">20<span class="sb-unit">%</span></div>
-          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--purple)" data-w="20%"></div></div>
-          <div class="sb-name">Culture</div>
-        </div>
-        <div class="sb-stat extra">
-          <div class="sb-num">15<span class="sb-unit">%</span></div>
-          <div class="sb-bar-wrap"><div class="bar-fill" style="background:var(--gold)" data-w="15%"></div></div>
-          <div class="sb-name">Extra</div>
-        </div>
+      <div class="disk-bar">
+        <div class="disk-seg survival" style="flex:40 0 0"></div>
+        <div class="disk-seg optional" style="flex:25 0 0"></div>
+        <div class="disk-seg culture"  style="flex:20 0 0"></div>
+        <div class="disk-seg extra"    style="flex:15 0 0"></div>
+      </div>
+      <div class="disk-labels">
+        <div class="disk-lbl survival" style="flex:40 0 0"><span class="dl-pct">40%</span><span class="dl-name">Survival</span></div>
+        <div class="disk-lbl optional" style="flex:25 0 0"><span class="dl-pct">25%</span><span class="dl-name">Optional</span></div>
+        <div class="disk-lbl culture"  style="flex:20 0 0"><span class="dl-pct">20%</span><span class="dl-name">Culture</span></div>
+        <div class="disk-lbl extra"    style="flex:15 0 0"><span class="dl-pct">15%</span><span class="dl-name">Extra</span></div>
       </div>
     </div>
 
@@ -1071,7 +1057,7 @@
   const barObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.querySelectorAll('.bar-fill').forEach((bar, i) => { bar.style.transitionDelay = (i * 60) + 'ms'; bar.style.transform = 'scaleX(' + parseFloat(bar.dataset.w) / 100 + ')'; });
+        e.target.querySelectorAll('.disk-seg').forEach((seg, i) => { seg.style.transitionDelay = (i * 120) + 'ms'; seg.style.transform = 'scaleX(1)'; });
         barObs.unobserve(e.target);
       }
     });
