@@ -191,6 +191,7 @@
     @media (prefers-reduced-motion: reduce) { .disk-seg { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .reveal { transition: none; opacity: 1; transform: none; } }
 
+
     /* WHAT-IF */
     #whatif .whatif-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     .whatif-phone-wrap { display: flex; flex-direction: column; align-items: center; }
@@ -223,36 +224,13 @@
     .ko-letter-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--persimmon); margin-bottom: 4px; }
     .ko-letter-text { font-size: 11px; font-style: italic; color: var(--ash); line-height: 1.5; }
 
-    /* CURRENCY */
+    /* FEATURES SHOWCASE */
     #currency { background: var(--warm-mid); }
 
-    .currency-cards { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 52px; }
-    .cur-card { background: var(--offwhite); border-radius: 20px; padding: 28px 32px; box-shadow: 0 4px 28px color-mix(in oklch, var(--ink) 8%, transparent); min-width: 175px; position: relative; text-align: left; overflow: hidden; }
-    .cur-card::after { font-family: var(--serif); font-size: 7rem; line-height: 1; position: absolute; bottom: -18px; right: 6px; opacity: 0.07; color: var(--ink); pointer-events: none; user-select: none; }
-    .cur-card.usd { background: color-mix(in oklch, var(--persimmon) 8%, var(--offwhite)); }
-    .cur-card.usd::after { content: '$'; }
-    .cur-card.usd .fx-badge { background: color-mix(in oklch, var(--persimmon) 15%, var(--offwhite)); }
-    .cur-card.eur { background: color-mix(in oklch, var(--gold) 8%, var(--offwhite)); }
-    .cur-card.eur::after { content: '€'; }
-    .cur-card.eur .fx-badge { background: color-mix(in oklch, var(--gold) 15%, var(--offwhite)); }
-    .cur-card.thb { background: color-mix(in oklch, var(--teal) 8%, var(--offwhite)); }
-    .cur-card.thb::after { content: '฿'; }
-    .cur-card.thb .fx-badge { background: color-mix(in oklch, var(--teal) 15%, var(--offwhite)); }
-    .cur-flag { font-size: 2.25rem; margin-bottom: 0.875rem; line-height: 1; }
-    .cur-code { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ash); margin-bottom: 0.375rem; text-decoration: none; }
-    .cur-amount { display: block; font-family: var(--serif); font-size: 1.625rem; color: var(--ink); line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums lining-nums; }
-    .fx-badge { display: inline-block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.05em; color: var(--ink); background: color-mix(in oklch, var(--teal) 18%, var(--offwhite)); padding: 3px 8px; border-radius: 100px; margin-top: 0.5rem; }
-    .cur-total { margin-top: 56px; }
-    .cur-ledger { max-width: 420px; margin: 0 auto; text-align: left; }
-    .cur-ledger-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid color-mix(in oklch, var(--ink) 7%, transparent); }
-    .cur-ledger-code { display: flex; align-items: center; gap: 9px; font-size: 0.8125rem; font-weight: 500; color: var(--ash); letter-spacing: 0.04em; }
-    .cur-ledger-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .cur-ledger-amt { font-size: 0.9375rem; font-family: var(--sans); font-variant-numeric: tabular-nums lining-nums; color: var(--ink); }
-    .cur-ledger-total { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0 0; border-top: 3px double color-mix(in oklch, var(--ink) 18%, transparent); margin-top: 1px; }
-    .cur-ledger-total-label { font-size: 0.8125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ash); }
-    .cur-total-amt { font-family: var(--serif); font-size: clamp(2.25rem, 8vw, 3.25rem); color: var(--ink); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; display: flex; align-items: baseline; gap: 0.15em; }
-    .cur-total-amt span:last-child { font-size: 0.75em; color: var(--ash); }
-    .cur-rates-note { text-align: right; font-size: 0.875rem; color: var(--ash); margin-top: 0.625rem; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 52px; }
+    .ft { border-radius: 20px; padding: 36px 32px; background: var(--offwhite); }
+    .ft-name { font-family: var(--serif); font-size: clamp(19px, 1.9vw, 24px); font-weight: 700; color: var(--ink); line-height: 1.15; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .ft-desc { font-size: 13px; line-height: 1.65; color: var(--ash); }
 
     /* PHILOSOPHY */
     #philosophy { background: linear-gradient(to bottom, var(--warm-mid), var(--offwhite)); text-align: center; }
@@ -325,8 +303,7 @@
       .runway-num { font-size: 48px; }
       .tweaks-panel, .tweaks-trigger { display: none !important; }
       #kakeibo-circle { max-width: 340px; }
-      .currency-cards { gap: 16px; }
-      .cur-card { min-width: 160px; padding: 24px 20px; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     }
     @media (max-width: 480px) {
       .pillars-cols { grid-template-columns: 1fr; }
@@ -334,9 +311,8 @@
       .pcol:nth-child(n+2) { border-top: 1px solid var(--warm-deep); padding-top: 28px; }
       .pcol:nth-child(3), .pcol:nth-child(4) { border-top: 1px solid var(--warm-deep); }
       .disk-bar { height: 28px; border-radius: 4px; }
-      .currency-cards { flex-direction: column; }
-      .cur-card { min-width: unset; width: 100%; }
-      .cur-total-amt { font-size: clamp(1.875rem, 6vw, 2.75rem); }
+      .features-grid { grid-template-columns: 1fr; }
+      .ft { padding: 28px 24px; }
       .testimonials { grid-template-columns: 1fr; gap: 14px; }
       .testi { padding: 20px; }
     }
@@ -892,55 +868,41 @@
 
 <div class="washi-divider"></div>
 
-<!-- ─── 8. MULTI-CURRENCY ───────────────────────────────────────────────────── -->
+<!-- ─── 8. FEATURES SHOWCASE ──────────────────────────────────────────────── -->
 <section id="currency" aria-labelledby="currency-heading">
   <div class="container">
     <div class="reveal">
-      <p class="sec-eyebrow">Multi-currency</p>
-      <h2 id="currency-heading" class="sec-display">Wherever you earn,<br>wherever you <em>spend</em>.</h2>
+      <p class="sec-eyebrow">Everything in one place</p>
+      <h2 id="currency-heading" class="sec-display">Built for lives that<br>don't fit one <em>country</em>.</h2>
       <hr class="sec-rule">
-      <p class="sec-intro">Each currency in its own wallet, totals converted at live rates. Yobi is built for people whose financial life doesn't fit one country.</p>
+      <p class="sec-intro">Six features for freelancers and digital nomads who need their finances to keep up across borders, banks, and budgets.</p>
     </div>
-    <div class="currency-cards">
-      <div class="cur-card usd reveal" style="transition-delay:0.10s">
-        <div class="cur-flag" aria-hidden="true">🇺🇸</div>
-        <abbr class="cur-code" title="US Dollar">USD</abbr>
-        <data class="cur-amount" value="4230.00">$4,230.00</data>
-        <span class="fx-badge">Base</span>
+
+    <div class="features-grid">
+      <div class="ft ft-currency reveal">
+        <h3 class="ft-name">Multi-currency wallets</h3>
+        <p class="ft-desc">Each currency in its own wallet. Totals convert at live rates, automatically.</p>
       </div>
-      <div class="cur-card eur reveal" style="transition-delay:0.22s">
-        <div class="cur-flag" aria-hidden="true">🇪🇺</div>
-        <abbr class="cur-code" title="Euro">EUR</abbr>
-        <data class="cur-amount" value="2100.00">€2,100.00</data>
-        <span class="fx-badge">1 EUR = 1.08 USD</span>
+      <div class="ft ft-recurring reveal" style="transition-delay:0.06s">
+        <h3 class="ft-name">Recurring payments</h3>
+        <p class="ft-desc">Log subscriptions and retainers once. Yobi projects them forward so your runway stays accurate.</p>
       </div>
-      <div class="cur-card thb reveal" style="transition-delay:0.34s">
-        <div class="cur-flag" aria-hidden="true">🇹🇭</div>
-        <abbr class="cur-code" title="Thai Baht">THB</abbr>
-        <data class="cur-amount" value="12500">฿12,500</data>
-        <span class="fx-badge">1 THB = 0.029 USD</span>
+      <div class="ft ft-accounts reveal" style="transition-delay:0.04s">
+        <h3 class="ft-name">Multi-account</h3>
+        <p class="ft-desc">Connect multiple banks and wallets. Every balance in one view.</p>
       </div>
-    </div>
-    <div class="cur-total reveal" style="transition-delay:0.50s">
-      <div class="cur-ledger">
-        <div class="cur-ledger-row">
-          <span class="cur-ledger-code"><span class="cur-ledger-dot" style="background:var(--persimmon)" aria-hidden="true"></span>USD</span>
-          <span class="cur-ledger-amt">$4,230.00</span>
-        </div>
-        <div class="cur-ledger-row">
-          <span class="cur-ledger-code"><span class="cur-ledger-dot" style="background:var(--gold)" aria-hidden="true"></span>EUR</span>
-          <span class="cur-ledger-amt">€2,100.00</span>
-        </div>
-        <div class="cur-ledger-row">
-          <span class="cur-ledger-code"><span class="cur-ledger-dot" style="background:var(--teal)" aria-hidden="true"></span>THB</span>
-          <span class="cur-ledger-amt">฿12,500</span>
-        </div>
-        <div class="cur-ledger-total">
-          <span class="cur-ledger-total-label">Total</span>
-          <div class="cur-total-amt" aria-label="approximately $8,906.42"><span aria-hidden="true">≈ $8,906</span><span aria-hidden="true">.42</span></div>
-        </div>
+      <div class="ft ft-quickpay reveal" style="transition-delay:0.08s">
+        <h3 class="ft-name">Quick pay</h3>
+        <p class="ft-desc">Save frequent payment flows and trigger them with a single tap.</p>
       </div>
-      <div class="cur-rates-note">Rates sync automatically</div>
+      <div class="ft ft-envelope reveal" style="transition-delay:0.12s">
+        <h3 class="ft-name">Envelope tracking</h3>
+        <p class="ft-desc">Divide your budget into named envelopes and watch what remains in each.</p>
+      </div>
+      <div class="ft ft-insights reveal" style="transition-delay:0.06s">
+        <h3 class="ft-name">Spending insights</h3>
+        <p class="ft-desc">See how your spending shifts across weeks and income cycles, patterns no list can show.</p>
+      </div>
     </div>
   </div>
 </section>
