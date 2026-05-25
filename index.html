@@ -57,7 +57,9 @@
 
     /* HERO */
     #hero { min-height: 94vh; display: flex; align-items: center; padding: 80px 0 100px; overflow: hidden; }
-    .hero-inner { max-width: 680px; }
+    .hero-inner { display: grid; grid-template-columns: 1fr auto; gap: 64px; align-items: center; }
+    .hero-phone .phone-screen, .runway-phone .phone-screen, .whatif-phone .phone-screen, .reflection-phone .phone-screen { min-height: 0; }
+    .hero-phone img, .runway-phone img, .whatif-phone img, .reflection-phone img { width: 100%; display: block; }
     .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--persimmon); margin-bottom: 20px; font-family: var(--sans); }
     .hero-text h1 { font-size: clamp(38px, 5vw, 64px); margin-bottom: 28px; font-weight: 700; }
     .hero-text h1 em { font-style: italic; font-weight: 600; color: var(--persimmon); }
@@ -286,7 +288,8 @@
       .feature-grid, #whatif .whatif-inner { grid-template-columns: 1fr; gap: 48px; }
       .hero-text { text-align: center; }
       .hero-text p, .hero-cta { max-width: none; justify-content: center; }
-      .hero-inner { max-width: none; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-phone { display: none; }
       .problem-cards { grid-template-columns: 1fr; }
       .testimonials { grid-template-columns: repeat(2,1fr); gap: 16px; }
       .pillars-cols { grid-template-columns: repeat(2, 1fr); }
@@ -491,6 +494,13 @@
         </div>
       </div>
 
+      <div class="phone hero-phone reveal">
+        <div class="phone-island"></div>
+        <div class="phone-screen">
+          <img src="assets/home-screen.png" alt="Yobi home screen showing wallet balance and transactions">
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -610,36 +620,10 @@
   <div class="container">
     <div class="feature-grid">
       <div class="reveal" style="display:flex;justify-content:center">
-        <div class="phone">
+        <div class="phone runway-phone">
           <div class="phone-island"></div>
           <div class="phone-screen" aria-hidden="true">
-            <div class="screen-pad">
-              <div class="screen-status"><span class="screen-time">9:41</span><span class="screen-icons">▲▲▲ ●●●</span></div>
-              <div style="margin-bottom:16px">
-                <div style="font-family:var(--serif);font-size:18px;color:var(--ink)">Your Runway</div>
-              </div>
-              <div style="display:flex;gap:8px;margin-bottom:18px">
-                <div class="wallet-chip" style="flex:1"><span class="cc">USD</span><span class="ca">$4,230</span></div>
-                <div class="wallet-chip" style="flex:1"><span class="cc">EUR</span><span class="ca">€2,100</span></div>
-              </div>
-              <div style="background:var(--warm-mid);border-radius:14px;padding:20px 16px;text-align:center;margin-bottom:16px">
-                <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);opacity:0.6;margin-bottom:8px">Days of runway</div>
-                <div style="font-family:var(--serif);font-size:72px;color:var(--gold);line-height:1" class="count-trigger" data-target="47">47</div>
-                <div style="font-size:12px;color:var(--ash)">Amber · Watch your spending</div>
-              </div>
-              <svg viewBox="0 0 230 70" fill="none" style="width:100%;margin-bottom:12px">
-                <defs><linearGradient id="cg2" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#E8A43C" stop-opacity="0.22"/><stop offset="100%" stop-color="#E8A43C" stop-opacity="0"/></linearGradient></defs>
-                <path d="M0,60 C45,52 90,38 130,32 S200,40 230,55" stroke="#E8A43C" stroke-width="2" fill="none" stroke-linecap="round"/>
-                <path d="M0,60 C45,52 90,38 130,32 S200,40 230,55 L230,70 L0,70Z" fill="url(#cg2)"/>
-                <line x1="130" y1="0" x2="130" y2="70" stroke="#E8A43C" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
-                <text x="132" y="12" font-size="8" fill="#E8A43C" opacity="0.8" font-family="sans-serif">Today</text>
-              </svg>
-              <div class="tx-section">
-                <div class="tx-head">Income &amp; Expenses factored in</div>
-                <div class="tx"><div class="tx-info"><span class="tx-name">Freelance retainer</span><span class="tx-cat">Monthly income</span></div><span class="tx-amt pos">+$4,500</span></div>
-                <div class="tx"><div class="tx-info"><span class="tx-name">Rent + utilities</span><span class="tx-cat">Survival</span></div><span class="tx-amt neg">−$1,450</span></div>
-              </div>
-            </div>
+            <img src="assets/runway.png" alt="Yobi runway screen showing days of runway and balance chart">
           </div>
         </div>
       </div>
@@ -673,46 +657,10 @@
         </div>
       </div>
       <div class="reveal whatif-phone-wrap" style="transition-delay:0.15s">
-        <div class="phone">
+        <div class="phone whatif-phone">
           <div class="phone-island"></div>
           <div class="phone-screen">
-            <div class="screen-pad" style="padding-top:52px">
-              <div class="screen-header" style="margin-bottom:18px">
-                <span class="screen-title">What If?</span>
-                <span class="screen-kanji">間</span>
-              </div>
-              <div class="wi-runway-display" aria-live="polite" aria-label="Projected runway">
-                <span class="wi-runway-num red" id="wiRunway">31</span>
-                <div class="wi-sub-label">days of runway</div>
-              </div>
-              <svg viewBox="0 0 230 55" fill="none" style="width:100%;margin:10px 0">
-                <defs><linearGradient id="cg3" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#D4704A" stop-opacity="0.22"/><stop offset="100%" stop-color="#D4704A" stop-opacity="0"/></linearGradient></defs>
-                <path id="wiChartLine" d="M0,40 C50,38 100,35 130,32 S190,28 230,48" stroke="#D4704A" stroke-width="2" fill="none" stroke-linecap="round"/>
-                <path id="wiChartFill" d="M0,40 C50,38 100,35 130,32 S190,28 230,48 L230,55 L0,55Z" fill="url(#cg3)"/>
-              </svg>
-              <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);opacity:0.55;margin-bottom:10px">Toggle expenses</div>
-              <div class="wi-expense">
-                <div class="wi-exp-info"><div class="wi-name">Streaming Bundle</div><div class="wi-sub">Optional · monthly</div></div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span class="wi-amt">−$28</span>
-                  <label class="ios-tog"><input type="checkbox" id="wiTog1" aria-label="Skip Streaming Bundle ($28/mo)" onchange="updateWhatIf()"><div class="ios-tog-track"><div class="ios-tog-thumb"></div></div></label>
-                </div>
-              </div>
-              <div class="wi-expense">
-                <div class="wi-exp-info"><div class="wi-name">Design Software</div><div class="wi-sub">Culture · annual ÷ 12</div></div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span class="wi-amt">−$54</span>
-                  <label class="ios-tog"><input type="checkbox" id="wiTog2" aria-label="Skip Design Software ($54/mo)" onchange="updateWhatIf()"><div class="ios-tog-track"><div class="ios-tog-thumb"></div></div></label>
-                </div>
-              </div>
-              <div class="wi-expense">
-                <div class="wi-exp-info"><div class="wi-name">Gym Membership</div><div class="wi-sub">Optional · monthly</div></div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span class="wi-amt">−$40</span>
-                  <label class="ios-tog"><input type="checkbox" id="wiTog3" aria-label="Skip Gym Membership ($40/mo)" onchange="updateWhatIf()"><div class="ios-tog-track"><div class="ios-tog-thumb"></div></div></label>
-                </div>
-              </div>
-            </div>
+            <img src="assets/what-if.png" alt="Yobi What If screen showing expense toggles and runway projection">
           </div>
         </div>
       </div>
@@ -816,49 +764,10 @@
         </div>
       </div>
       <div class="reveal" style="transition-delay:0.12s;display:flex;justify-content:center">
-        <div class="phone">
+        <div class="phone reflection-phone">
           <div class="phone-island"></div>
           <div class="phone-screen" aria-hidden="true">
-            <div class="refl-screen-head">
-              <svg width="36" height="36" style="flex-shrink:0"><use href="#ko-peek"/></svg>
-              <div>
-                <div class="rtitle">May Reflection</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.72)">5 questions · ~5 min</div>
-              </div>
-            </div>
-            <div class="refl-body" style="padding-top:14px">
-              <div class="ko-letter">
-                <div class="ko-letter-label">From Ko</div>
-                <div class="ko-letter-text">"Ko notices your Optional spending was down 18% from last month. What changed?"</div>
-              </div>
-              <div class="refl-prompt">
-                <div class="refl-prompt-label">What went well with your spending?</div>
-                <div class="refl-prompt-text" style="color:var(--ink)">I cooked at home more and didn't impulse-buy anything online...</div>
-              </div>
-              <div class="refl-prompt">
-                <div class="refl-prompt-label">What surprised you?</div>
-                <div class="refl-prompt-text" style="opacity:0.45;font-style:italic">Tap to reflect...</div>
-              </div>
-              <div class="refl-prompt">
-                <div class="refl-prompt-label">One intention for next month</div>
-                <div class="refl-prompt-text" style="opacity:0.45;font-style:italic">Tap to set...</div>
-              </div>
-              <div style="display:flex;gap:10px;align-items:center;margin-top:12px;padding:12px;background:white;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,0.05)">
-                <svg viewBox="0 0 60 60" style="width:48px;height:48px;flex-shrink:0">
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#EDE5D8" stroke-width="11"/>
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#D4704A" stroke-width="11" stroke-dasharray="55 83" stroke-dashoffset="0"/>
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#3D9B9B" stroke-width="11" stroke-dasharray="34 104" stroke-dashoffset="-55"/>
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#9B6FAF" stroke-width="11" stroke-dasharray="27 111" stroke-dashoffset="-89"/>
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#E8A43C" stroke-width="11" stroke-dasharray="21 117" stroke-dashoffset="-116"/>
-                </svg>
-                <div style="font-size:10px;color:var(--ash);line-height:1.7">
-                  <div><span style="color:var(--persimmon)">■</span> Survival 40%</div>
-                  <div><span style="color:var(--teal)">■</span> Optional 25%</div>
-                  <div><span style="color:var(--purple)">■</span> Culture 20%</div>
-                  <div><span style="color:var(--gold)">■</span> Extra 15%</div>
-                </div>
-              </div>
-            </div>
+            <img src="assets/ko-letter.png" alt="Ko's Letter screen showing monthly reflection and spending breakdown">
           </div>
         </div>
       </div>
