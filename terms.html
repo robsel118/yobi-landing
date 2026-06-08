@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service · Yobi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --persimmon: #D4704A; --teal: #3D9B9B; --purple: #9B6FAF; --gold: #E8A43C;
+      --offwhite: #FAF7F2; --ink: #1A1510; --ash: #6B6560;
+      --warm-mid: #F3EEE6; --warm-deep: #EDE5D8; --warm-muted: #D0C9BE;
+      --serif: 'Noto Serif JP', 'Georgia', serif;
+      --sans: 'Noto Sans', '-apple-system', 'BlinkMacSystemFont', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--offwhite); color: var(--ash); line-height: 1.7; overflow-x: hidden; }
+
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9000;
+      opacity: 0.045; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 250px 250px;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    a { text-decoration: none; }
+
+    nav { position: sticky; top: 0; z-index: 500; padding: 18px 0; background: rgba(250,247,242,0.88); backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgba(107,101,96,0.1); }
+    .nav-inner { display: flex; align-items: center; }
+    .nav-logo { font-family: var(--sans); font-size: 22px; color: var(--ink); display: flex; align-items: center; gap: 9px; font-weight: 600; }
+    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--persimmon); flex-shrink: 0; }
+
+    .legal-wrap { max-width: 680px; margin: 0 auto; padding: 72px 48px 96px; }
+
+    .legal-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--persimmon); margin-bottom: 16px; font-family: var(--sans); }
+    .legal-wrap h1 { font-family: var(--serif); font-size: clamp(28px, 3vw, 42px); color: var(--ink); font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+    .legal-meta { font-size: 13px; color: var(--warm-muted); margin-bottom: 56px; }
+
+    .legal-wrap h2 { font-family: var(--serif); font-size: 20px; color: var(--ink); font-weight: 600; margin: 44px 0 12px; }
+    .legal-wrap p { font-size: 15px; color: var(--ash); margin-bottom: 16px; max-width: none; }
+    .legal-wrap ul { padding-left: 20px; margin-bottom: 16px; }
+    .legal-wrap li { font-size: 15px; color: var(--ash); margin-bottom: 8px; line-height: 1.65; }
+    .legal-wrap a { color: var(--persimmon); text-decoration: underline; text-underline-offset: 3px; }
+    .legal-wrap a:hover { opacity: 0.75; }
+
+    .callout { background: var(--warm-mid); border-left: 3px solid var(--persimmon); border-radius: 4px; padding: 16px 20px; margin: 24px 0; }
+    .callout p { margin-bottom: 0; }
+
+    .legal-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(107,101,96,0.15) 20%, rgba(107,101,96,0.15) 80%, transparent); margin: 44px 0; }
+
+    footer { padding: 36px 0; border-top: 1px solid rgba(107,101,96,0.08); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-brand { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+    .footer-legal { font-size: 12px; color: var(--ash); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .footer-legal a { color: var(--ash); text-decoration: underline; text-underline-offset: 2px; }
+    .footer-legal a:hover { color: var(--ink); }
+    .footer-sep { color: var(--warm-muted); }
+
+    @media (max-width: 680px) {
+      .container { padding: 0 24px; }
+      .legal-wrap { padding: 48px 24px 72px; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-legal { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <div class="nav-dot" aria-hidden="true"></div>
+        Yobi
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="legal-wrap">
+    <div class="legal-eyebrow">Legal</div>
+    <h1>Terms of Service</h1>
+    <p class="legal-meta">Last updated: June 8, 2026</p>
+
+    <p>These Terms of Service ("Terms") govern your use of the Yobi mobile application and website at yobi.app (collectively, the "Service"), provided by Yobi ("we," "us," or "our"). By downloading the app or using the Service, you agree to these Terms.</p>
+
+    <div class="legal-divider"></div>
+
+    <h2>1. Description of Service</h2>
+    <p>Yobi is a personal budgeting tool inspired by the Kakeibo method — a Japanese approach to household finance built on awareness, intention, tracking, and reflection. The Service helps you record expenses, visualize spending patterns, and plan your financial runway.</p>
+    <p>All data you enter is stored locally on your device. Yobi has no backend servers of its own and cannot access, store, or process your financial information. To provide certain features, the app makes limited requests to third-party services — for example, fetching live currency exchange rates and sending anonymous usage analytics — but these never include your balances or transactions. See our <a href="privacy.html">Privacy Policy</a> for details.</p>
+
+    <h2>2. Eligibility</h2>
+    <p>You must be at least 13 years old (or 16 in the European Union) and able to form a binding contract to use the Service. By using Yobi, you confirm that you meet these requirements.</p>
+
+    <h2>3. Not Financial Advice</h2>
+    <div class="callout">
+      <p><strong>Yobi is a tool, not a financial advisor.</strong> Nothing in the Service constitutes financial, investment, tax, or legal advice. The calculations, charts, and projections Yobi produces are based solely on the data you enter and are intended for personal awareness only. Do not make significant financial decisions based solely on information displayed by Yobi. For financial advice, please consult a qualified professional.</p>
+    </div>
+
+    <h2>4. Your Responsibilities</h2>
+    <ul>
+      <li>You are responsible for the accuracy of the data you enter into the app.</li>
+      <li>You are responsible for keeping your device and any backups secure.</li>
+      <li>You agree to use the Service only for lawful personal purposes.</li>
+      <li>You will not attempt to reverse engineer, decompile, or tamper with the app.</li>
+    </ul>
+
+    <h2>5. Intellectual Property</h2>
+    <p>The Yobi name, logo, Ko the fox character, app interface, and all associated content are owned by Yobi and protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works from any Yobi content without our express written permission.</p>
+    <p>You retain all rights to the data you enter into the app. Because that data never leaves your device, no license from you to us is needed or granted.</p>
+
+    <h2>6. Disclaimer of Warranties</h2>
+    <p>The Service is provided "as is" and "as available" without warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+    <p>We do not warrant that the Service will be uninterrupted, error-free, or free of viruses or other harmful components. We do not guarantee the accuracy or completeness of any calculations or projections the app produces.</p>
+
+    <h2>7. Limitation of Liability</h2>
+    <p>To the fullest extent permitted by applicable law, Yobi shall not be liable for any indirect, incidental, special, consequential, or punitive damages — including loss of data, loss of profits, or financial losses — arising out of or related to your use of the Service, even if we have been advised of the possibility of such damages.</p>
+    <p>Our total liability for any claim arising from these Terms or your use of the Service shall not exceed the amount you paid us in the twelve months preceding the claim (which, for a free app, is zero).</p>
+
+    <h2>8. Termination</h2>
+    <p>We may discontinue or modify the Service at any time, with or without notice. Because your data lives on your device, discontinuing the Service will not result in data loss on our end — but app updates and future features may no longer be available.</p>
+    <p>You may stop using the Service at any time by deleting the app.</p>
+
+    <h2>9. Third-Party Services</h2>
+    <p>The Service uses third-party services including PostHog (analytics), Tally (the waitlist form on our website), a third-party exchange-rate provider (live currency conversion), and Apple platform services. Your use of those services is subject to their respective terms. We are not responsible for the practices of any third-party service provider.</p>
+
+    <h2>10. Apple App Store</h2>
+    <p>The following terms apply when you download Yobi from the Apple App Store:</p>
+    <ul>
+      <li>This agreement is between you and Yobi only, not with Apple. Apple is not responsible for the app or its content.</li>
+      <li>Apple has no obligation to provide any maintenance or support for the app.</li>
+      <li>Apple is not responsible for any product warranties, whether express or implied. If the app fails to conform to an applicable warranty, you may notify Apple, and Apple may refund the purchase price (if any); to the maximum extent permitted by law, Apple has no other warranty obligation with respect to the app.</li>
+      <li>Apple is not responsible for addressing any claims relating to the app, including product-liability, regulatory, or intellectual-property claims; Yobi is solely responsible.</li>
+      <li>You represent that you are not located in a country subject to a U.S. Government embargo, and that you are not listed on any U.S. Government list of prohibited or restricted parties.</li>
+      <li>Apple and its subsidiaries are third-party beneficiaries of these Terms and, upon your acceptance, have the right to enforce them against you.</li>
+    </ul>
+
+    <h2>11. Governing Law and Disputes</h2>
+    <p>These Terms are governed by applicable law in your local jurisdiction. Any disputes arising from these Terms or the Service will be resolved in the courts of competent jurisdiction where you reside, unless applicable law requires otherwise.</p>
+    <p>We encourage you to contact us before initiating any formal dispute. Most concerns can be resolved quickly and informally.</p>
+
+    <h2>12. Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. When we do, we will update the "Last updated" date at the top of this page. Continued use of the Service after updated Terms are posted constitutes your acceptance of those changes. If you disagree with the updated Terms, please stop using the Service.</p>
+
+    <h2>13. General</h2>
+    <p><strong>Entire agreement.</strong> These Terms, together with our <a href="privacy.html">Privacy Policy</a>, make up the entire agreement between you and Yobi regarding the Service.</p>
+    <p><strong>Severability.</strong> If any provision of these Terms is found unenforceable, the remaining provisions will continue in full effect.</p>
+    <p><strong>Assignment.</strong> You may not assign or transfer these Terms. We may assign them in connection with a merger, acquisition, or sale of assets.</p>
+    <p><strong>No waiver.</strong> Our failure to enforce any provision is not a waiver of our right to do so later.</p>
+
+    <h2>14. Contact</h2>
+    <p>Questions about these Terms? Reach us at:</p>
+    <p><a href="mailto:robert.seligmann@pm.me">robert.seligmann@pm.me</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="nav-dot" aria-hidden="true"></div> Yobi</div>
+      <div class="footer-legal">
+        © 2026 Yobi
+        <span class="footer-sep">·</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="footer-sep">·</span>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
